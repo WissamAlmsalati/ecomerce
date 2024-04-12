@@ -4,28 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes/controlers/recipes_controler/cubti_recipes/fetch_recipes_cubit.dart';
 import '../../../constance.dart';
-import '../../../moudels/category/category_module.dart';
-import '../../../moudels/recipes/recipes_repository.dart';
+import '../../../moudels/recipes/clothing_repository.dart';
 import '../../recipe_screen/recipe_screen.dart';
 
-class RecipeWidget extends StatelessWidget {
-  const RecipeWidget({Key? key}) : super(key: key);
+class ProductCard extends StatelessWidget {
+  const ProductCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final constans = Constans(context);
+
     return BlocProvider(
       create: (context) => FetchRecipesCubit()..fetchRecipes(),
       child: BlocBuilder<FetchRecipesCubit, FetchRecipesState>(
         builder: (context, state) {
           if (state is DataLoading) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (state is DataLoaded) {
             final recipes = state.recipes;
             return Container(
-              height: Constans.height(context) * 0.4,
-              width: Constans.width(context) * 0.96,
+              height: constans.height * 0.4,
+              width: constans.width * 0.96,
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
@@ -42,45 +43,33 @@ class RecipeWidget extends StatelessWidget {
                               recipeId: recipe.id,
                               recipeName: recipe.name,
                               recipeDescription: recipe.description,
-                              recipeImage: recipe.image,
-                              recipeIngredients: recipe.ingredients.toString(),
-                              recipeSteps: recipe.steps.toString(),
+                              recipeImage: recipe.image, discount: '',
                             ),
                           ));
                     },
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(9),
+                        color: Colors.transparent,
                       ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 0.5,
-                          ),
-                          borderRadius: BorderRadius.circular(9),
-                          color: Colors.transparent,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: Constans.height(context) * 0.22,
-                              width: Constans.width(context) * 0.47,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(9),
-                                image: DecorationImage(
-                                  image: MemoryImage(
-                                    base64Decode(recipe.image.split(',').last),
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: constans.height * 0.19,
+                            width: constans.width * 0.47,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                image: NetworkImage(recipe.image),
+                                fit: BoxFit.cover,
                               ),
                             ),
-                            Text(recipe.name),
-                            Text(recipe.description),
-                          ],
-                        ),
+                          ),
+                          Text(recipe.name),
+                          Text(recipe.description),
+                        ],
                       ),
                     ),
                   );
@@ -91,22 +80,10 @@ class RecipeWidget extends StatelessWidget {
           } else if (state is DataError) {
             return Center(child: Text('Error: ${state.message}'));
           } else {
-            return Center(child: Text('Unknown state'));
+            return const Center(child: Text('Unknown state'));
           }
         },
       ),
     );
-  }
-
-  Future<void> _deleteRecipe(String id) async {
-    // Create an instance of RecipesRepository
-    RecipesRepository repository = RecipesRepository();
-    try {
-      // Call the method to delete the recipe
-      await repository.deleteRecipe(id);
-      print('Recipe deleted successfully');
-    } catch (e) {
-      print(e);
-    }
   }
 }

@@ -14,6 +14,8 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final constans = Constans(context);
+
     return BlocProvider(
       create: (BuildContext context) {
         return CategoryCubit()..fetchCategory();
@@ -30,8 +32,8 @@ class CategoryWidget extends StatelessWidget {
             );
           } else if (state is CategoryLoaded) {
             return Container(
-              height: Constans.height(context) * 0.1,
-              width: Constans.width(context) * 0.96,
+              height: constans.height * 0.08,
+              width: constans.width * 0.96,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: state.categories.length,
@@ -47,47 +49,30 @@ class CategoryWidget extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      height: Constans.height(context) * 0.1,
-                      width: Constans.width(context) * 0.17,
+                     margin: index != state.categories.length ? EdgeInsets.only(left: constans.mediumWidth ,right: constans.mediumWidth) : EdgeInsets.zero,
+                      width: constans.width * 0.16,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9),
+                       color: constans.lightBrown,
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Container(
-                        margin: index == 0
-                            ? const EdgeInsets.only(left: 0)
-                            : const EdgeInsets.only(left: 10),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 0.5,
+                      child:Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: constans.height * 0.05,
+                            width: constans.width * 0.3,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(9),
+                            ),
+                            child:Image.memory(
+                              base64Decode(state.categories[index].image.split(',').last),
+                              scale: 0.5,
+                            )
                           ),
-                          borderRadius: BorderRadius.circular(9),
-                          color: Colors.transparent,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              height: Constans.height(context) * 0.06,
-                              width: Constans.width(context) * 0.3,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(9),
-                              ),
-                              child:Image.memory(
-                                base64Decode(state.categories[index].image.split(',').last),
-                                scale: 0.5,
 
-                              )
-                            ),
-                            Text(state.categories[index].name,
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1
-                            ),
-                          ],
-                        ),
+
+
+                        ],
                       ),
                     ),
                   );

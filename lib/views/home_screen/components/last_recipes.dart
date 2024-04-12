@@ -3,30 +3,34 @@ import 'package:flutter/material.dart';
 import '../../../constance.dart';
 import 'recipe_widget.dart';
 
-class LatestRecipes extends StatelessWidget {
-  const LatestRecipes({super.key});
+class FlashSale extends StatelessWidget {
+  const FlashSale({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final constans = Constans(context);
+
     return Center(
       child: Column(
         children: [
           Container(
-            width: Constans.width(context) * 0.96,
+            width: constans.width * 0.96,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(9),
             ),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
-                    "Latest Recipes",
+                    "Flash Sale",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
-                RecipeWidget(),
+
+
+                ProductCard(),
               ],
             ),
           ),
@@ -35,3 +39,5 @@ class LatestRecipes extends StatelessWidget {
     );
   }
 }
+
+

@@ -7,20 +7,29 @@ environment:
   sdk: '>=3.4.0-190.1.beta <4.0.0'
 
 dependencies:
+  banner_carousel: ^1.2.1
   bloc: ^8.1.4
   cached_network_image: ^3.3.1
   cloud_firestore: ^4.15.10
   dots_indicator: ^3.0.0
+  esc_pos_printer: ^4.1.0
+  esc_pos_utils: ^1.1.0
   firebase_auth: ^4.18.0
   firebase_core: ^2.27.2
   firebase_storage: ^11.6.11
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.5
+  flutter_thermal_printer: ^0.0.4
+  google_fonts: ^6.2.1
+  google_nav_bar: ^5.0.6
   html: ^0.15.4
+  iconsax: ^0.0.8
   image_picker: ^1.0.7
+  image_picker_web: ^3.1.1
   intl_phone_number_input: ^0.7.4
   otp_pin_field: ^1.2.2
+  usb_thermal_printer_web: ^0.0.3
 
 dev_dependencies:
   flutter_test:

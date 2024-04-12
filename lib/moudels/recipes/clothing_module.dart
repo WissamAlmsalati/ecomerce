@@ -1,38 +1,29 @@
-class Recipe {
+class Clothing {
   String id;
   String name;
   String description;
   String image;
   String category;
-  String difficulty;
-  String duration;
-  List<String> ingredients;
-  List<String> steps;
+  String discount;
 
-  Recipe({
+  Clothing({
     required this.id,
     required this.name,
     required this.description,
     required this.image,
     required this.category,
-    required this.difficulty,
-    required this.duration,
-    required this.ingredients,
-    required this.steps,
+    this.discount = '0',
   });
 
   // Define a fromMap constructor to create a Recipe object from a map
-  factory Recipe.fromMap(Map<String, dynamic> map) {
-    return Recipe(
+  factory Clothing.fromMap(Map<String, dynamic> map) {
+    return Clothing(
       id: map['id'],
       name: map['name'],
       description: map['description'],
       image: map['image'],
       category: map['category'],
-      difficulty: map['difficulty'],
-      duration: map['duration'],
-      ingredients: List<String>.from(map['ingredients'] ?? []),
-      steps: List<String>.from(map['steps'] ?? []),
+      discount: map['discount'],
     );
   }
 
@@ -44,10 +35,7 @@ class Recipe {
       'description': description,
       'image': image,
       'category': category,
-      'difficulty': difficulty,
-      'duration': duration,
-      'ingredients': ingredients,
-      'steps': steps,
+      'discount': discount,
     };
   }
 }

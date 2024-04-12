@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../moudels/recipes/recipes_module.dart';
-import '../../../moudels/recipes/recipes_repository.dart';
+import '../../../moudels/recipes/clothing_module.dart';
+import '../../../moudels/recipes/clothing_repository.dart';
 
 part 'fetch_recipes_state.dart';
 
@@ -12,7 +12,7 @@ class FetchRecipesCubit extends Cubit<FetchRecipesState> {
   Future<void> fetchRecipes() async {
     emit(DataLoading());
     try {
-      final recipes = await RecipesRepository().fetchData();
+      final recipes = await ClothingRepository().fetchData();
       emit(DataLoaded(recipes, [])); // Pass an empty list for recipesById
     } catch (e) {
       emit(DataError(e.toString()));
@@ -22,7 +22,17 @@ class FetchRecipesCubit extends Cubit<FetchRecipesState> {
   Future<void> fetchRecipesByCategory(String categoryId) async {
     emit(DataLoading());
     try {
-      final recipes = await RecipesRepository().fetchDataByCategory(categoryId);
+      final recipes = await ClothingRepository().fetchDataByCategory(categoryId);
+      emit(DataLoaded(recipes, [])); // Pass an empty list for recipesById
+    } catch (e) {
+      emit(DataError(e.toString()));
+    }
+  }
+
+  Future<void> fetchRecipesByName(String name) async {
+    emit(DataLoading());
+    try {
+      final recipes = await ClothingRepository().fetchDataByName(name);
       emit(DataLoaded(recipes, [])); // Pass an empty list for recipesById
     } catch (e) {
       emit(DataError(e.toString()));

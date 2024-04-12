@@ -61,9 +61,8 @@ class CategoryScreen extends StatelessWidget {
                               recipeId: recipe.id,
                               recipeName: recipe.name,
                               recipeDescription: recipe.description,
-                              recipeImage: recipe.image,
-                              recipeIngredients: recipe.ingredients.toString(),
-                              recipeSteps: recipe.steps.toString(),
+                              recipeImage: recipe.image, discount: '',
+
                             ),
                           ));
                     },

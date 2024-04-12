@@ -11,8 +11,7 @@ class RecipeScreen extends StatelessWidget {
   String recipeName;
   String recipeDescription;
   String recipeImage;
-  String recipeIngredients;
-  String recipeSteps;
+  String discount;
 
   RecipeScreen(
       {super.key,
@@ -20,11 +19,12 @@ class RecipeScreen extends StatelessWidget {
       required this.recipeName,
       required this.recipeDescription,
       required this.recipeImage,
-      required this.recipeIngredients,
-      required this.recipeSteps});
+        required this.discount});
 
   @override
   Widget build(BuildContext context) {
+
+    final constans = Constans(context);
 
     List<String> tabs=[
       "المكونات",
@@ -40,17 +40,12 @@ class RecipeScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-                height: Constans.height(context) * 0.3,
-                width: Constans.width(context) * 0.96,
-                child: Image.memory(
-                  base64Decode(recipeImage.split(',').last),
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.fitHeight,
-                )),
+                height: constans.height * 0.3,
+                width: constans.width * 0.96,
+                child: Image.network(recipeImage)),
+            
             Text(recipeDescription),
-            Text(recipeIngredients),
-            Text(recipeSteps),
+
 
             Spacer(),
             Padding(
