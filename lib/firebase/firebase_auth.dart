@@ -1,18 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
-  static FirebaseAuth _auth = FirebaseAuth.instance;
-  static FirebaseFirestore _db = FirebaseFirestore.instance;
 
+  final supabase = Supabase.instance.client;
   static Future<User?> signIn(String email, String password) async {
     try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      return userCredential.user;
+      final result = await supabase.auth.signIn(email: email, password: password);
+      if (result.error != null) {
+        print(result.error!.message);
+        return null;
+      }
+      final user = result.user;
+      return user;
     } catch (e) {
       print(e);
       return null;
@@ -21,12 +21,13 @@ class AuthService {
 
   static Future<User?> signUp(String email, String password) async {
     try {
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      return userCredential.user;
+      final result = await supabase.auth.signUp(email: email, password: password);
+      if (result.error != null) {
+        print(result.error!.message);
+        return null;
+      }
+      final user = result.user;
+      return user;
     } catch (e) {
       print(e);
       return null;
@@ -34,13 +35,26 @@ class AuthService {
   }
 
   static Future<void> signOut() async {
-    await _auth.signOut();
+    await supabase.auth.signOut();
   }
 
   static Future<void> addUser(String name, String email) async {
-    await _db.collection('users').doc(_auth.currentUser!.uid).set({
-      'name': name,
-      'email': email,
-    });
+    final user = supabase.auth.currentUser;
+    if (user == null) {
+      throw Exception('You must be signed in to add a user');
+    }
+
+    final result = await supabase.from('users').insert([
+      {
+        'id': user.id, // Use Supabase's generated UUID for ID
+        'name': name,
+        'email': email,
+      },
+    ]);
+
+    if (result.error != null) {
+      print(result.error!.message);
+      throw Exception('Failed to add user');
+    }
   }
 }
