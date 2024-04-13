@@ -47,30 +47,30 @@ class HomeScreen extends StatelessWidget {
                     const CoustomeSearchBar(),
                     constants.samllmediumSizedBoxHeight,
                     const BannerWidget(),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: constants.smallWidth, vertical: constants.smallHeight),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10, left: 10),
+                          child: Text(
                             "Categories",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Text(
-                              "See All",
-                              style: TextStyle(
-                                color: constants.brown,
-                                fontSize: 16,
-                              ),
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Text(
+                            "See All",
+                            style: TextStyle(
+                              color: constants.brown,
+                              fontSize: 16,
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
                     ),
                     const CategoryWidget(),
                     constants.samllmediumSizedBoxHeight,

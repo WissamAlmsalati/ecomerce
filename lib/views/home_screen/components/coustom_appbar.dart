@@ -17,7 +17,7 @@ class CoustomAppBar extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("UserLocation"),
+              const Text("User Name", style: TextStyle(fontSize: 20) )   ,
               Row(
                 children: [
                   Icon(Iconsax.location5, color: constans.brown),
@@ -32,7 +32,7 @@ class CoustomAppBar extends StatelessWidget {
             height: 45.0,
             decoration: BoxDecoration(
               color: constans.white,
-              shape: BoxShape.circle,
+              borderRadius: BorderRadius.circular(10.0)
             ),
             child: Center(
               child: IconButton(
