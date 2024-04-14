@@ -67,11 +67,11 @@ class SignIn extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Sign In Failed'),
+            title: const Text('Sign In Failed'),
             content: Text(e.toString()),
             actions: <Widget>[
               TextButton(
-                child: Text('Close'),
+                child: const Text('Close'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

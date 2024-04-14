@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../constance.dart';
 
 class CoustomAppBar extends StatelessWidget {

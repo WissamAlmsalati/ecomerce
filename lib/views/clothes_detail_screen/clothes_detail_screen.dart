@@ -6,14 +6,14 @@ import 'package:recipes/constance.dart';
 
 import '../../controlers/recipes_controler/cubti_recipes/fetch_recipes_cubit.dart';
 
-class RecipeScreen extends StatelessWidget {
+class ClothesScreen extends StatelessWidget {
   String recipeId;
   String recipeName;
   String recipeDescription;
   String recipeImage;
   String discount;
 
-  RecipeScreen(
+  ClothesScreen(
       {super.key,
       required this.recipeId,
       required this.recipeName,
@@ -39,7 +39,7 @@ class RecipeScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Container(
+            SizedBox(
                 height: constans.height * 0.3,
                 width: constans.width * 0.96,
                 child: Image.network(recipeImage)),
@@ -47,14 +47,14 @@ class RecipeScreen extends StatelessWidget {
             Text(recipeDescription),
 
 
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ElevatedButton(onPressed: () {}, child: Text("Add To Cart")),
-                  Text("Price")
+                  ElevatedButton(onPressed: () {}, child: const Text("Add To Cart")),
+                  const Text("Price")
                 ],
               ),
             )

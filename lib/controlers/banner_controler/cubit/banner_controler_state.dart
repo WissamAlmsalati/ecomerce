@@ -1,8 +1,4 @@
-part of '../../../firebase/banner_controler_cubit.dart';
-
-
-
-
+part of 'banner_controler_cubit.dart';
 
 @immutable
 abstract class BannerState {}
@@ -12,9 +8,10 @@ class BannerInitial extends BannerState {}
 class BannerLoading extends BannerState {}
 
 class BannerLoaded extends BannerState {
-  final List<BannerModel> banners;
+  final List<BannerMoudule> banners;
+  final int currentPage;
 
-  BannerLoaded(this.banners);
+  BannerLoaded(this.banners, this.currentPage);
 }
 
 class BannerError extends BannerState {
@@ -22,3 +19,4 @@ class BannerError extends BannerState {
 
   BannerError(this.message);
 }
+

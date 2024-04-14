@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-
 import '../../../moudels/recipes/clothing_module.dart';
 import '../../../moudels/recipes/clothing_repository.dart';
 
@@ -13,7 +12,7 @@ class FetchRecipesCubit extends Cubit<FetchRecipesState> {
     emit(DataLoading());
     try {
       final recipes = await ClothingRepository().fetchData();
-      emit(DataLoaded(recipes, [])); // Pass an empty list for recipesById
+      emit(DataLoaded(recipes, const [])); // Pass an empty list for recipesById
     } catch (e) {
       emit(DataError(e.toString()));
     }
@@ -23,7 +22,7 @@ class FetchRecipesCubit extends Cubit<FetchRecipesState> {
     emit(DataLoading());
     try {
       final recipes = await ClothingRepository().fetchDataByCategory(categoryId);
-      emit(DataLoaded(recipes, [])); // Pass an empty list for recipesById
+      emit(DataLoaded(recipes, const [])); // Pass an empty list for recipesById
     } catch (e) {
       emit(DataError(e.toString()));
     }
@@ -33,7 +32,7 @@ class FetchRecipesCubit extends Cubit<FetchRecipesState> {
     emit(DataLoading());
     try {
       final recipes = await ClothingRepository().fetchDataByName(name);
-      emit(DataLoaded(recipes, [])); // Pass an empty list for recipesById
+      emit(DataLoaded(recipes, const [])); // Pass an empty list for recipesById
     } catch (e) {
       emit(DataError(e.toString()));
     }

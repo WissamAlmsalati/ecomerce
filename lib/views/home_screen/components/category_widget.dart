@@ -42,32 +42,32 @@ class CategoryWidget extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => CategoryScreen(
-                          categoryName: state.categories[index].name,
-                          categoryId: state.categories[index].id,
-                      ))
+                          builder: (context) => CategoryScreen(
+                            categoryName: state.categories[index].name,
+                            categoryId: state.categories[index].id,
+                          ))
                       );
                     },
                     child: Container(
-                     margin: index != state.categories.length ? EdgeInsets.only(left: constans.mediumWidth ,right: constans.mediumWidth) : EdgeInsets.zero,
+                      margin: index != state.categories.length ? EdgeInsets.only(left: constans.mediumWidth ,right: constans.mediumWidth) : EdgeInsets.zero,
                       width: constans.width * 0.16,
                       decoration: BoxDecoration(
-                       color: constans.lightBrown,
+                        color: constans.lightBrown,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child:Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
-                            height: constans.height * 0.05,
-                            width: constans.width * 0.3,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(9),
-                            ),
-                            child:Image.memory(
-                              base64Decode(state.categories[index].image.split(',').last),
-                              scale: 0.5,
-                            )
+                              height: constans.height * 0.05,
+                              width: constans.width * 0.3,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(9),
+                              ),
+                              child:Image.memory(
+                                base64Decode(state.categories[index].image.split(',').last),
+                                scale: 0.5,
+                              )
                           ),
 
 

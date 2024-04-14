@@ -8,11 +8,11 @@ class FetchRecipesInitial extends FetchRecipesState {}
 class DataLoading extends FetchRecipesInitial{}
 
 class DataLoaded extends FetchRecipesInitial{
-  final List<Clothing> recipes;
-  final List<Clothing> recipesById;
+  final List<Clothing> clothes;
+  final List<Clothing> clothesById;
 
 
-  DataLoaded(this.recipes, this.recipesById,);
+  DataLoaded(this.clothes, this.clothesById);
 }
 
 class DataError extends FetchRecipesInitial{

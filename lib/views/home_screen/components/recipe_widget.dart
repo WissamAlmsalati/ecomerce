@@ -1,14 +1,13 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes/controlers/recipes_controler/cubti_recipes/fetch_recipes_cubit.dart';
+import 'package:recipes/views/home_screen/components/view_clothes_widget.dart';
 import '../../../constance.dart';
-import '../../../moudels/recipes/clothing_repository.dart';
-import '../../recipe_screen/recipe_screen.dart';
+import '../../clothes_detail_screen/clothes_detail_screen.dart';
 
-class ProductCard extends StatelessWidget {
-  const ProductCard({Key? key}) : super(key: key);
+
+class ClothesCard extends StatelessWidget {
+  const ClothesCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +20,8 @@ class ProductCard extends StatelessWidget {
           if (state is DataLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is DataLoaded) {
-            final recipes = state.recipes;
-            return Container(
+            final clothesList = state.clothes;
+            return SizedBox(
               height: constans.height * 0.4,
               width: constans.width * 0.96,
               child: GridView.builder(
@@ -33,48 +32,28 @@ class ProductCard extends StatelessWidget {
                   childAspectRatio: 0.7,
                 ),
                 itemBuilder: (context, index) {
-                  final recipe = recipes[index];
+                  final clothes = clothesList[index];
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RecipeScreen(
-                              recipeId: recipe.id,
-                              recipeName: recipe.name,
-                              recipeDescription: recipe.description,
-                              recipeImage: recipe.image, discount: '',
+                            builder: (context) => ClothesScreen(
+                              recipeId: clothes.id,
+                              recipeName: clothes.name,
+                              recipeDescription: clothes.description,
+                              recipeImage: clothes.image, discount: '',
                             ),
                           ));
                     },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(9),
-                        color: Colors.transparent,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: constans.height * 0.19,
-                            width: constans.width * 0.47,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(
-                                image: NetworkImage(recipe.image),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Text(recipe.name),
-                          Text(recipe.description),
-                        ],
-                      ),
-                    ),
+                    child: ViewClothes(
+                      name: clothes.name,
+                      image: clothes.image,
+                      description: clothes.description,
+                    )
                   );
                 },
-                itemCount: recipes.length,
+                itemCount: clothesList.length,
               ),
             );
           } else if (state is DataError) {

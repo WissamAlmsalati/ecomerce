@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recipes/views/clothes_detail_screen/clothes_detail_screen.dart';
 
 import '../../constance.dart';
 import '../home_screen/components/recipe_widget.dart';
 import '../../../controlers/recipes_controler/cubti_recipes/fetch_recipes_cubit.dart';
-import '../recipe_screen/recipe_screen.dart';
 
 class CategoryScreen extends StatelessWidget {
   final String categoryName;
@@ -40,24 +40,24 @@ class CategoryScreen extends StatelessWidget {
                 child: Text(state.message),
               );
             } else if (state is DataLoaded) {
-              print('Fetched recipes: ${state.recipes.length} items');
-              for (int i = 0; i < state.recipes.length; i++) {
+              print('Fetched recipes: ${state.clothes.length} items');
+              for (int i = 0; i < state.clothes.length; i++) {
                 print(
-                    'Recipe $i: Name - ${state.recipes[i].name}, Image URL - ${state.recipes[i].image}');
+                    'Recipe $i: Name - ${state.clothes[i].name}, Image URL - ${state.clothes[i].image}');
               }
 
-              print('Data loaded: ${state.recipes}');
+              print('Data loaded: ${state.clothes}');
               return ListView.builder(
-                itemCount: state.recipes.length,
+                itemCount: state.clothes.length,
                 itemBuilder: (BuildContext context, int index) {
-                  print('Recipe: ${state.recipes[index]}');
+                  print('Recipe: ${state.clothes[index]}');
                   return GestureDetector(
                     onTap: () {
-                      final recipe = state.recipes[index];
+                      final recipe = state.clothes[index];
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RecipeScreen(
+                            builder: (context) => ClothesScreen(
                               recipeId: recipe.id,
                               recipeName: recipe.name,
                               recipeDescription: recipe.description,
@@ -67,15 +67,9 @@ class CategoryScreen extends StatelessWidget {
                           ));
                     },
                     child: ListTile(
-                      title: Text(state.recipes[index].name),
-                      subtitle: Text(state.recipes[index].description),
-                      leading: Image.memory(
-                        base64Decode(
-                            state.recipes[index].image.split(',').last),
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
+                      title: Text(state.clothes[index].name),
+                      subtitle: Text(state.clothes[index].description),
+                      leading: Image.network(state.clothes[index].image),
                     ),
                   );
                 },

@@ -103,11 +103,11 @@ class SignUp extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Sign Up Failed'),
+              title: const Text('Sign Up Failed'),
               content: Text(e.toString()),
               actions: <Widget>[
                 TextButton(
-                  child: Text('Close'),
+                  child: const Text('Close'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
