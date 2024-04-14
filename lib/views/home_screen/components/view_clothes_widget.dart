@@ -32,7 +32,7 @@ class ViewClothes extends StatelessWidget {
             ),
           ),
           Text(name),
-          Text(description),
+          Text(description,maxLines: 1,),
         ],
       ),
     );

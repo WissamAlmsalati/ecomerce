@@ -47,9 +47,9 @@ class ClothesCard extends StatelessWidget {
                           ));
                     },
                     child: ViewClothes(
-                      name: clothes.name,
-                      image: clothes.image,
-                      description: clothes.description,
+                      name: clothes.name ??"",
+                      image: clothes.image??"",
+                      description: clothes.description??"",
                     )
                   );
                 },

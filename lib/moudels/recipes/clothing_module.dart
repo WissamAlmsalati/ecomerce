@@ -1,6 +1,9 @@
 class Clothing {
   String id;
   String name;
+  String price;
+  String size;
+  String color;
   String description;
   String image;
   String category;
@@ -12,6 +15,9 @@ class Clothing {
     required this.description,
     required this.image,
     required this.category,
+    required this.color,
+    required this.size,
+    required this.price,
     this.discount = '0',
   });
 
@@ -24,6 +30,9 @@ class Clothing {
       image: map['image'],
       category: map['category'],
       discount: map['discount'],
+      color: map['color'],
+      size: map['size'],
+      price: map['price'],
     );
   }
 
@@ -36,6 +45,9 @@ class Clothing {
       'image': image,
       'category': category,
       'discount': discount,
+      'color': color,
+      'size': size,
+      'price': price,
     };
   }
 }
