@@ -1,12 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recipes/constance.dart';
 
 class ViewClothes extends StatelessWidget {
   String image;
   String name;
-  String description;
+  String price;
 
-   ViewClothes({super.key , required this.image, required this.name, required this.description});
+   ViewClothes({super.key , required this.image, required this.name, required this.price});
 
   @override
   Widget build(BuildContext context) {
@@ -20,19 +21,22 @@ class ViewClothes extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: constans.height * 0.19,
-            width: constans.width * 0.47,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                image: NetworkImage(image),
-                fit: BoxFit.cover,
+          Hero(
+            tag: image,
+            child: Container(
+              height: constans.height * 0.19,
+              width: constans.width * 0.47,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                  image: NetworkImage(image),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
           Text(name),
-          Text(description,maxLines: 1,),
+          Text("\$$price"),
         ],
       ),
     );

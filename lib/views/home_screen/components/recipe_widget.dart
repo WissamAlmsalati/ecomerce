@@ -42,14 +42,14 @@ class ClothesCard extends StatelessWidget {
                               recipeId: clothes.id,
                               recipeName: clothes.name,
                               recipeDescription: clothes.description,
-                              recipeImage: clothes.image, discount: '',
+                              recipeImage: clothes.image, discount: '', price:clothes.price,
                             ),
                           ));
                     },
                     child: ViewClothes(
                       name: clothes.name ??"",
                       image: clothes.image??"",
-                      description: clothes.description??"",
+                      price: clothes.price??"",
                     )
                   );
                 },

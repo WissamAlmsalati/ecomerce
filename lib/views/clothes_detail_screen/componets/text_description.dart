@@ -39,7 +39,7 @@ class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
         children: <TextSpan>[
           TextSpan(
             text: flag ? (firstHalf) : (firstHalf + secondHalf),
-            style: const TextStyle(color: Colors.black),
+            style:  TextStyle(color: Constans(context).brown, fontSize: 16),
           ),
           TextSpan(
             text: flag ? " show more" : " show less",

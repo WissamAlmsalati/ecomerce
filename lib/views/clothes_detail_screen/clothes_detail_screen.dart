@@ -12,6 +12,8 @@ class ClothesScreen extends StatefulWidget {
   String recipeDescription;
   String recipeImage;
   String discount;
+  String price;
+
 
   ClothesScreen(
       {super.key,
@@ -19,6 +21,7 @@ class ClothesScreen extends StatefulWidget {
       required this.recipeName,
       required this.recipeDescription,
       required this.recipeImage,
+        required this.price,
       required this.discount});
 
   @override
@@ -56,7 +59,7 @@ class _ClothesScreenState extends State<ClothesScreen> {
             SizedBox(
               height: constans.height * 0.44,
               width: constans.width,
-              child: Image.network(widget.recipeImage, fit: BoxFit.cover),
+              child: Hero(tag: widget.recipeImage, child: Image.network(widget.recipeImage, fit: BoxFit.cover)),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15, top: 25),
@@ -97,6 +100,9 @@ class _ClothesScreenState extends State<ClothesScreen> {
                       return StatefulBuilder(
                         builder: (BuildContext context, StateSetter setState) {
                           return ChoiceChip(
+                            backgroundColor: constans.white,
+                            selectedColor: constans.brown,
+
                             label: Text(size),
                             selected: selectedSize == size,
                             onSelected: (selected) {
@@ -137,8 +143,22 @@ class _ClothesScreenState extends State<ClothesScreen> {
           padding: const EdgeInsets.only(left: 15, right: 15),
           child: Row(
             children: [
-              const Text("Price"),
-              const Spacer(),
+Row(
+  children: [
+    if (widget.discount != null && widget.discount != '0' && isNumeric(widget.discount))
+      Text(
+        "\$${widget.price}",
+        style: TextStyle(
+          fontSize: 20,
+          decoration: TextDecoration.lineThrough,
+        ),
+      ),
+    Text(
+      "\$${widget.discount != null && widget.discount != '0' && isNumeric(widget.discount) ? (double.parse(widget.price) * (1 - double.parse(widget.discount) / 100)).toStringAsFixed(2) : widget.price}",
+      style: TextStyle(fontSize: 20),
+    ),
+  ],
+),              const Spacer(),
 
 
 
@@ -168,4 +188,10 @@ class _ClothesScreenState extends State<ClothesScreen> {
       ),
     );
   }
+  bool isNumeric(String s) {
+  if(s == null) {
+    return false;
+  }
+  return double.tryParse(s) != null;
+}
 }
