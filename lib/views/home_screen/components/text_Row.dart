@@ -23,7 +23,7 @@ class TextRow extends StatelessWidget {
           child: Text(
             text,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -38,7 +38,7 @@ class TextRow extends StatelessWidget {
               tapText,
               style: TextStyle(
                 color: constants.brown,
-                fontSize: 16,
+                fontSize: 12,
               ),
             ),
           ),

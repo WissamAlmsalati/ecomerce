@@ -38,8 +38,8 @@ class FirestoreServiceImpl implements FirestoreService {
     throw UnimplementedError();
   }
 
-  @override
-  Future<void> getDataById(String collection ,String id) async {
-    await _db.collection(collection).doc(id).get();
-  }
+@override
+Future<DocumentSnapshot> getDataById(String collection ,String id) async {
+  return await _db.collection(collection).doc(id).get();
+}
 }

@@ -40,7 +40,6 @@ class _ClothesScreenState extends State<ClothesScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(widget.recipeName),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
