@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:recipes/constance.dart';
 import 'package:recipes/moudels/orders/order_repostry.dart';
@@ -156,13 +154,13 @@ String checkPriceAndQuantity() {
   decoration: BoxDecoration(
     border: Border.all(color: Colors.black.withOpacity(0.2)),
     color: Colors.white,
-    borderRadius:  BorderRadius.only(
+    borderRadius:  const BorderRadius.only(
       topLeft: Radius.circular(20),
       topRight: Radius.circular(20),
     ),
   ),
   child: Padding(
-    padding:  EdgeInsets.only(left: 15, right: 15),
+    padding:  const EdgeInsets.only(left: 15, right: 15),
     child: Row(
       children: [
         Row(
@@ -209,11 +207,11 @@ String checkPriceAndQuantity() {
                   },
                   child:  Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.shopping_cart,
                         color: Colors.white,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Text(
                         "Add To Cart",
                         style: TextStyle(color: Colors.white ,fontSize:constans.height * 0.01),

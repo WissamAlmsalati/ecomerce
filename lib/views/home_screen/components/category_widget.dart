@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../constance.dart';
@@ -7,7 +7,7 @@ import '../../../controlers/category_controler/cubit/category_cubit.dart';
 import '../../category_screen/category_screen.dart';
 
 class CategoryWidget extends StatelessWidget {
-  const CategoryWidget({Key? key}) : super(key: key);
+  const CategoryWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +28,16 @@ class CategoryWidget extends StatelessWidget {
               child: Text(state.message),
             );
           } else if (state is CategoryLoaded) {
-            return Container(
+            return SizedBox(
               height: constans.height * 0.08,
               width: constans.width * 0.96,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: state.categories.length,
                 itemBuilder: (BuildContext context, int index) {
-                  print('Image URL: ${state.categories[index].image}'); // Print the image URL
+                  if (kDebugMode) {
+                    print('Image URL: ${state.categories[index].image}');
+                  } // Print the image URL
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(

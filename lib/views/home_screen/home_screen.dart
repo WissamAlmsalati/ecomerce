@@ -5,7 +5,7 @@ import 'components/category_widget.dart';
 import 'components/coustom_appbar.dart';
 import 'components/last_recipes.dart';
 import 'components/search_bar.dart';
-import 'components/text_Row.dart';
+import 'components/text_row.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

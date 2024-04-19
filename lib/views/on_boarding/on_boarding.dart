@@ -105,7 +105,7 @@ class OnBoarding extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Container(
+              SizedBox(
                 width: constans.height * 0.42,
                 height: 50,
                 child: ElevatedButton(

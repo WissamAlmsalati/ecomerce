@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:recipes/views/home_screen/components/text_Row.dart';
+import 'package:recipes/views/home_screen/components/text_row.dart';
 import '../../../constance.dart';
 import 'recipe_widget.dart';
 

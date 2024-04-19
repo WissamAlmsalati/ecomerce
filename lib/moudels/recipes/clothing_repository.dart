@@ -43,6 +43,7 @@ class ClothingRepository {
 
     // Filter the recipes by category
     List<Clothing> filteredRecipes =
+        // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
         allRecipes.where((Clothing) => Clothing.category == categoryId).toList();
 
     return filteredRecipes;
@@ -60,6 +61,7 @@ class ClothingRepository {
 
   // Filter the clothing by name
   List<Clothing> filteredClothing =
+      // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
       allClothing.where((Clothing) => Clothing.name == name).toList();
 
   return filteredClothing;

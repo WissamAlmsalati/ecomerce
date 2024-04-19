@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes/views/clothes_detail_screen/clothes_detail_screen.dart';
@@ -8,9 +8,8 @@ class CategoryScreen extends StatelessWidget {
   final String categoryName;
   final String categoryId;
 
-  CategoryScreen(
-      {Key? key, required this.categoryName, required this.categoryId})
-      : super(key: key);
+  const CategoryScreen(
+      {super.key, required this.categoryName, required this.categoryId});
 
   @override
   Widget build(BuildContext context) {
@@ -25,27 +24,39 @@ class CategoryScreen extends StatelessWidget {
         child: BlocBuilder<FetchRecipesCubit, FetchRecipesState>(
           builder: (BuildContext context, state) {
             if (state is DataLoading) {
-              print('Data is loading...');
+              if (kDebugMode) {
+                print('Data is loading...');
+              }
               return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (state is DataError) {
-              print('Error: ${state.message}');
+              if (kDebugMode) {
+                print('Error: ${state.message}');
+              }
               return Center(
                 child: Text(state.message),
               );
             } else if (state is DataLoaded) {
-              print('Fetched recipes: ${state.clothes.length} items');
+              if (kDebugMode) {
+                print('Fetched recipes: ${state.clothes.length} items');
+              }
               for (int i = 0; i < state.clothes.length; i++) {
-                print(
+                if (kDebugMode) {
+                  print(
                     'Recipe $i: Name - ${state.clothes[i].name}, Image URL - ${state.clothes[i].image}');
+                }
               }
 
-              print('Data loaded: ${state.clothes}');
+              if (kDebugMode) {
+                print('Data loaded: ${state.clothes}');
+              }
               return ListView.builder(
                 itemCount: state.clothes.length,
                 itemBuilder: (BuildContext context, int index) {
-                  print('Recipe: ${state.clothes[index]}');
+                  if (kDebugMode) {
+                    print('Recipe: ${state.clothes[index]}');
+                  }
                   return GestureDetector(
                     onTap: () {
                       final recipe = state.clothes[index];
@@ -70,7 +81,9 @@ class CategoryScreen extends StatelessWidget {
                 },
               );
             } else {
-              print('Unknown state: $state');
+              if (kDebugMode) {
+                print('Unknown state: $state');
+              }
               return Container();
             }
           },

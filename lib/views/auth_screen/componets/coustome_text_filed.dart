@@ -30,7 +30,7 @@ class CoustomTextField extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 20),
         child: TextFormField(
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 10.0 ,horizontal: 10), // Adjust vertical padding
+            contentPadding: const EdgeInsets.symmetric(vertical: 10.0 ,horizontal: 10), // Adjust vertical padding
             labelText: labelText,
             hintText: hintText,
             hintStyle: TextStyle(

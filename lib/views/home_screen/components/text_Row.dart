@@ -1,5 +1,6 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import '../../../constance.dart';
+import 'package:recipes/constance.dart';
 
 class TextRow extends StatelessWidget {
   final String text;

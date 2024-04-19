@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
@@ -14,21 +15,21 @@ class SignInForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     Constans constans = Constans(context);
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: Column(children: [
           Text("Sign in", style:  TextStyle(fontSize: constans.width * 0.06)),
           const SizedBox(height: 10),
           Text(
-              "Fill your information below or \login with social media",
+              "Fill your information below or \nlogin with social media",
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: constans.width*0.025, color: constans.black.withOpacity(0.7))),
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           CoustomTextField(
@@ -49,10 +50,10 @@ class SignInForm extends StatelessWidget {
             valdatorText: 'Enter Your Password',
           ),
 
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Container(
+          SizedBox(
             height: constans.height * 0.06,
             width: constans.width * 0.9,
             child: ElevatedButton(
@@ -67,21 +68,23 @@ class SignInForm extends StatelessWidget {
                 ),
               ),
               onPressed: () async {
-                if (_formKey.currentState!.validate()) {
+                if (formKey.currentState!.validate()) {
                   try {
                     await UserRepository.SignIn(
                       emailController.text,
                       passwordController.text,
 
                     );
-                    print("Validated");
+                    if (kDebugMode) {
+                      print("Validated");
+                    }
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const ScreensBody()));
                   } catch (e) {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Sign Up Failed'),
+                        return const AlertDialog(
+                          title: Text('Sign Up Failed'),
                           content: Text("email or password is incorrect"),
                         );
                       },
@@ -110,7 +113,7 @@ class SignInForm extends StatelessWidget {
                   ),
                 ),
                  Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
                     'or log in with',
                     style: TextStyle(color: Colors.black,fontSize: constans.width * 0.03),
@@ -154,7 +157,7 @@ class SignInForm extends StatelessWidget {
 
           ),
 
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
 

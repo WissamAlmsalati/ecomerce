@@ -4,29 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../constance.dart';
-import '../../../../controlers/banner_controler/cubit/banner_controler_cubit.dart';
 import '../../../../controlers/navbar_controler/cubit/screen_controler_cubit.dart';
-import '../../../../controlers/recipes_controler/cubti_recipes/fetch_recipes_cubit.dart';
 
 class ScreensBody extends StatelessWidget {
-  const ScreensBody({Key? key}) : super(key: key);
+  const ScreensBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     final Constans constants = Constans(context);
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<FetchRecipesCubit>(
-          create: (BuildContext context) => FetchRecipesCubit()..fetchRecipes(),
-        ),
-        BlocProvider<BannerCubit>(
-          create: (BuildContext context) => BannerCubit()..fetchBanner(),
-        ),
-        BlocProvider<ScreenControlerCubit>(
-          create: (BuildContext context) => ScreenControlerCubit(),
-        ),
-      ],
-        child: BlocBuilder<ScreenControlerCubit, ScreenControlerState>(
+    return  BlocBuilder<ScreenControlerCubit, ScreenControlerState>(
           builder: (context, state) {
             int currentIndex = 0;
             if (state is ScreenChanged) {
@@ -96,7 +82,7 @@ class ScreensBody extends StatelessWidget {
               ),
             );
           },
-        ),
+        
 
     );
   }

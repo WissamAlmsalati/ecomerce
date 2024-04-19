@@ -7,8 +7,9 @@ import 'package:recipes/moudels/user/user_module.dart';
 class UserRepository  {
 
   static final FirebaseAuth _auth = FirebaseAuth.instance;
-  static FirebaseFirestore _db = FirebaseFirestore.instance;
+  static final FirebaseFirestore _db = FirebaseFirestore.instance;
 
+// ignore: non_constant_identifier_names
 static Future<void> SignUp(String email, String password, String phone, String name ,BuildContext context) async {
   try {
     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
@@ -34,7 +35,9 @@ static Future<void> SignUp(String email, String password, String phone, String n
       //show alert dialog
       throw Exception('The account already exists for that email.');
     } else {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       throw Exception('An unknown error occurred.');
     }
   }
@@ -79,6 +82,7 @@ static Future<AppUser?> SignIn( String email, String password) async {
   }
 }
 
+// ignore: non_constant_identifier_names
 static Future<void> SignOut() async {
   await _auth.signOut();
 }
@@ -102,7 +106,9 @@ static Future<AppUser?> getCurrentUser() async {
       return null;
     }
   } catch (e) {
-    print(e);
+    if (kDebugMode) {
+      print(e);
+    }
     return null;
   }
 }
@@ -138,7 +144,9 @@ static Future<void> updatePassword(String password) async {
       await firebaseUser.updatePassword(password);
     }
   } catch (e) {
-    print(e);
+    if (kDebugMode) {
+      print(e);
+    }
   }
 }
 

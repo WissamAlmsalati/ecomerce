@@ -1,4 +1,6 @@
 // Import the cloud_firestore package at the top of your file
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
@@ -13,7 +15,7 @@ abstract class FirestoreService {
 
 // Define a concrete class that extends FirestoreService
 class FirestoreServiceImpl implements FirestoreService {
-  FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   @override
   Future<void> add(String collection, Map<String, dynamic> data) async {
@@ -33,7 +35,7 @@ class FirestoreServiceImpl implements FirestoreService {
 
   @override
   Future<void> fetchData(String collection) {
-    // TODO: implement fetchData
+   
     throw UnimplementedError();
   }
 

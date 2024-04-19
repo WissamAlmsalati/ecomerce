@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:recipes/firebase/firebase_firestore.dart';
 
-import 'bannerModule.dart';
+import 'banner_module.dart';
 
 
 

@@ -4,7 +4,7 @@ import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:get/get.dart';
 import 'package:recipes/views/screens_body.dart';
 import '../../../constance.dart';
-import '../../../moudels/user/terms&conditions.dart';
+import '../../../moudels/user/terms_conditions.dart';
 import '../../../moudels/user/user_repository.dart';
 import '../../../preferences.dart';
 import '../auth_sign_in.dart';
@@ -138,10 +138,11 @@ class SignUpForm extends StatelessWidget {
                     );
                   } catch (e) {
                     showDialog(
+                      // ignore: use_build_context_synchronously
                       context: context,
                       builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Sign Up Failed'),
+                        return const AlertDialog(
+                          title: Text('Sign Up Failed'),
                           content: Text("email or password is incorrect"),
                         );
                       },

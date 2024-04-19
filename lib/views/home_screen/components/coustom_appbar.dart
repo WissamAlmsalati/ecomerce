@@ -20,17 +20,28 @@ class CoustomAppBar extends StatelessWidget {
         } else if (snapshot.hasData) {
           return Padding(
             padding: EdgeInsets.only(
-                left: constans.smallWidth, right: constans.smallWidth, top: 10.0, bottom: 10.0),
+                left: constans.smallWidth,
+                right: constans.smallWidth,
+                top: 10.0,
+                bottom: 10.0),
             child: Row(
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("${snapshot.data!.name}", style: TextStyle(fontSize: constans.height * 0.02)),
+                    Text(snapshot.data!.name,
+                        style: TextStyle(fontSize: constans.height * 0.02)),
                     Row(
                       children: [
-                        Icon(Iconsax.location5, color: constans.brown,size: constans.height*0.02,),
-                         Text("Location",style: TextStyle(fontSize: constans.height*0.01),)
+                        Icon(
+                          Iconsax.location5,
+                          color: constans.brown,
+                          size: constans.height * 0.02,
+                        ),
+                        Text(
+                          "Location",
+                          style: TextStyle(fontSize: constans.height * 0.01),
+                        )
                       ],
                     )
                   ],
@@ -40,9 +51,8 @@ class CoustomAppBar extends StatelessWidget {
                   width: 45.0,
                   height: 45.0,
                   decoration: BoxDecoration(
-                    color: constans.white,
-                    borderRadius: BorderRadius.circular(10.0)
-                  ),
+                      color: constans.white,
+                      borderRadius: BorderRadius.circular(10.0)),
                   child: Center(
                     child: IconButton(
                       onPressed: () {},
@@ -54,7 +64,7 @@ class CoustomAppBar extends StatelessWidget {
             ),
           );
         } else {
-          return Text('No user found');
+          return const Text('No user found');
         }
       },
     );

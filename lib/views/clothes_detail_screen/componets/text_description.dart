@@ -6,9 +6,10 @@ import '../../../constance.dart';
 class DescriptionTextWidget extends StatefulWidget {
   final String text;
 
-  DescriptionTextWidget({required this.text});
+  const DescriptionTextWidget({super.key, required this.text});
 
   @override
+  // ignore: library_private_types_in_public_api
   _DescriptionTextWidgetState createState() => _DescriptionTextWidgetState();
 }
 

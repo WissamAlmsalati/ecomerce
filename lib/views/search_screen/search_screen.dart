@@ -11,6 +11,7 @@ class SearchScreen extends StatefulWidget {
   SearchScreen({super.key, this.showBackArrow = false});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SearchScreenState createState() => _SearchScreenState();
 }
 
@@ -28,7 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Search'),
-            leading: widget.showBackArrow ? BackButton() : null,
+            leading: widget.showBackArrow ? const BackButton() : null,
         ),
         body: SafeArea(
           child: Column(

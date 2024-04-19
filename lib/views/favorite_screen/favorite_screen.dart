@@ -11,7 +11,7 @@ class FavoriteScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('My Wishlist'),
       ),
-      body:ClothesCard(),
+      body:const ClothesCard(),
     );
   }
 }

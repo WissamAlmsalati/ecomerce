@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import '../../../moudels/banner/bannerModule.dart';
+import '../../../moudels/banner/banner_module.dart';
 import '../../../moudels/banner/banner_repostry.dart';
 
 part 'banner_controler_state.dart';
@@ -14,6 +14,7 @@ class BannerCubit extends Cubit<BannerState> {
   List<BannerMoudule> _banners = []; // Add this line
 
   BannerCubit() : super(BannerInitial()) {
+    fetchBanner();
     _startTimer();
   }
 
@@ -29,15 +30,16 @@ class BannerCubit extends Cubit<BannerState> {
 
   PageController get pageController => _pageController;
 
-
-
-void _startTimer() {
-  _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-    _currentPage = (_currentPage + 1) % (state as BannerLoaded).banners.length;
-    emit(BannerLoaded((state as BannerLoaded).banners, _currentPage));
-    updatePageController();
-  });
-}
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (state is BannerLoaded) {
+        _currentPage =
+            (_currentPage + 1) % (state as BannerLoaded).banners.length;
+        emit(BannerLoaded(_banners, _currentPage));
+        updatePageController();
+      }
+    });
+  }
 
   @override
   Future<void> close() {
@@ -55,7 +57,6 @@ void _startTimer() {
     }
   }
 
-
   void addBanner(BannerMoudule banner) async {
     try {
       emit(BannerLoading());
@@ -67,11 +68,11 @@ void _startTimer() {
     }
   }
 
-void updateCurrentPage(int index) {
-  _pageController.animateToPage(
-    _currentPage,
-    duration: const Duration(milliseconds: 300),
-    curve: Curves.easeIn,
-  );
-}
+  void updateCurrentPage(int index) {
+    _pageController.animateToPage(
+      _currentPage,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeIn,
+    );
+  }
 }
