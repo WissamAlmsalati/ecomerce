@@ -2,9 +2,13 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../../constance.dart';
 import '../../../controlers/category_controler/cubit/category_cubit.dart';
 import '../../category_screen/category_screen.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart'
+    as GetTransitions;
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({super.key});
@@ -40,21 +44,25 @@ class CategoryWidget extends StatelessWidget {
                   } // Print the image URL
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => CategoryScreen(
-                            categoryName: state.categories[index].name,
-                            categoryId: state.categories[index].id,
-                          ))
+                      Get.to(
+                        CategoryScreen(
+                          categoryName: state.categories[index].name,
+                          categoryId: state.categories[index].id,
+                        ),
                       );
                     },
                     child: Container(
-                      margin: index != state.categories.length ? EdgeInsets.only(left: constans.mediumWidth ,right: constans.mediumWidth) : EdgeInsets.zero,
+                      margin: index != state.categories.length
+                          ? EdgeInsets.only(
+                              left: constans.mediumWidth,
+                              right: constans.mediumWidth)
+                          : EdgeInsets.zero,
                       width: constans.width * 0.16,
                       decoration: BoxDecoration(
                         color: constans.lightBrown,
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child:Column(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
@@ -63,14 +71,12 @@ class CategoryWidget extends StatelessWidget {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(9),
                               ),
-                              child:Image.memory(
-                                base64Decode(state.categories[index].image.split(',').last),
+                              child: Image.memory(
+                                base64Decode(state.categories[index].image
+                                    .split(',')
+                                    .last),
                                 scale: 0.5,
-                              )
-                          ),
-
-
-
+                              )),
                         ],
                       ),
                     ),
