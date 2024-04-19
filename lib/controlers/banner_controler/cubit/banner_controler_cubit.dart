@@ -11,6 +11,7 @@ class BannerCubit extends Cubit<BannerState> {
   int _currentPage = 0;
   Timer? _timer;
   final PageController _pageController = PageController();
+  List<BannerMoudule> _banners = []; // Add this line
 
   BannerCubit() : super(BannerInitial()) {
     _startTimer();
@@ -44,30 +45,33 @@ void _startTimer() {
     return super.close();
   }
 
-  void fetchBanner() async {
+  Future<void> fetchBanner() async {
     try {
       emit(BannerLoading());
-      List<BannerMoudule> bannerMoudules = await _bannerRepostry.fetchData();
-      emit(BannerLoaded(bannerMoudules, _currentPage));
+      _banners = await _bannerRepostry.fetchData(); // Store banners in _banners
+      emit(BannerLoaded(_banners, _currentPage));
     } catch (e) {
       emit(BannerError(e.toString()));
     }
   }
+
 
   void addBanner(BannerMoudule banner) async {
     try {
       emit(BannerLoading());
       await _bannerRepostry.addBanner(banner);
-      fetchBanner();
+      _banners.add(banner); // Add the new banner to _banners
+      emit(BannerLoaded(_banners, _currentPage));
     } catch (e) {
       emit(BannerError(e.toString()));
     }
   }
 
-  void updateCurrentPage(int page) {
-    _currentPage = page;
-    if (state is BannerLoaded) {
-      emit(BannerLoaded((state as BannerLoaded).banners, _currentPage));
-    }
-  }
+void updateCurrentPage(int index) {
+  _pageController.animateToPage(
+    _currentPage,
+    duration: const Duration(milliseconds: 300),
+    curve: Curves.easeIn,
+  );
+}
 }

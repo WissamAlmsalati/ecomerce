@@ -20,15 +20,21 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.5
+  flutter_social_button: ^1.1.4+1
   flutter_thermal_printer: ^0.0.4
+  get: ^4.6.6
   google_fonts: ^6.2.1
   google_nav_bar: ^5.0.6
+  google_sign_in: ^6.2.1
   html: ^0.15.4
+  icon_icons: ^1.0.4
   iconsax: ^0.0.8
   image_picker: ^1.0.7
   image_picker_web: ^3.1.1
   intl_phone_number_input: ^0.7.4
   otp_pin_field: ^1.2.2
+  shared_preferences: ^2.2.3
+  sign_in_button: ^3.2.0
   usb_thermal_printer_web: ^0.0.3
 
 dev_dependencies:
@@ -38,3 +44,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/

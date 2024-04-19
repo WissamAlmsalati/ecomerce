@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:recipes/moudels/user/user_module.dart';
+import 'package:recipes/moudels/user/user_repository.dart';
 import '../../../constance.dart';
 
 class CoustomAppBar extends StatelessWidget {
@@ -8,40 +10,53 @@ class CoustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final constans = Constans(context);
-    return Padding(
-      padding:  EdgeInsets.only(
-          left:constans.smallWidth, right:constans.smallWidth, top: 10.0, bottom: 10.0),
-      child: Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text("User Name", style: TextStyle(fontSize: 20) )   ,
-              Row(
-                children: [
-                  Icon(Iconsax.location5, color: constans.brown),
-                  const Text("Location")
-                ],
-              )
-            ],
-          ),
-          const Spacer(),
-          Container(
-            width: 45.0,
-            height: 45.0,
-            decoration: BoxDecoration(
-              color: constans.white,
-              borderRadius: BorderRadius.circular(10.0)
+    return FutureBuilder<AppUser?>(
+      future: UserRepository.getCurrentUser(),
+      builder: (BuildContext context, AsyncSnapshot<AppUser?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (snapshot.hasData) {
+          return Padding(
+            padding: EdgeInsets.only(
+                left: constans.smallWidth, right: constans.smallWidth, top: 10.0, bottom: 10.0),
+            child: Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("${snapshot.data!.name}", style: TextStyle(fontSize: constans.height * 0.02)),
+                    Row(
+                      children: [
+                        Icon(Iconsax.location5, color: constans.brown,size: constans.height*0.02,),
+                         Text("Location",style: TextStyle(fontSize: constans.height*0.01),)
+                      ],
+                    )
+                  ],
+                ),
+                const Spacer(),
+                Container(
+                  width: 45.0,
+                  height: 45.0,
+                  decoration: BoxDecoration(
+                    color: constans.white,
+                    borderRadius: BorderRadius.circular(10.0)
+                  ),
+                  child: Center(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Iconsax.notification1),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            child: Center(
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(Iconsax.notification1),
-              ),
-            ),
-          ),
-        ],
-      ),
+          );
+        } else {
+          return Text('No user found');
+        }
+      },
     );
   }
 }

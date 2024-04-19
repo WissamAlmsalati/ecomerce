@@ -1,11 +1,12 @@
 class OrderModel {
-  String id;
-  String userId;
-  String userName;
-  String orderDate;
-  String orderStatus;
-  String totalPrice;
-  String orderAddress;
+  String? id;
+  String? userId;
+  String? userName;
+  List<String>? orderItems;
+  String? orderDate;
+  String? orderStatus;
+  String? totalPrice;
+  String? orderAddress;
 
   OrderModel({
     required this.id,
@@ -15,21 +16,23 @@ class OrderModel {
     required this.orderStatus,
     required this.totalPrice,
     required this.orderAddress,
+    required this.orderItems,
   });
 
-  factory OrderModel.fromJson(Map<String, dynamic> json) {
+  factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
-      id: json['id'],
-      userId: json['userId'],
-      userName: json['userName'],
-      orderDate: json['orderDate'],
-      orderStatus: json['orderStatus'],
-      totalPrice: json['totalPrice'],
-      orderAddress: json['orderAddress'],
+      id: map['id'],
+      userId: map['userId'],
+      userName: map['userName'],
+      orderDate: map['orderDate'],
+      orderStatus: map['orderStatus'],
+      totalPrice: map['totalPrice'],
+      orderAddress: map['orderAddress'],
+      orderItems: map['orderItems'].cast<String>(),
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
       'userId': userId,
@@ -38,6 +41,7 @@ class OrderModel {
       'orderStatus': orderStatus,
       'totalPrice': totalPrice,
       'orderAddress': orderAddress,
+      'orderItems': orderItems,
     };
   }
 }

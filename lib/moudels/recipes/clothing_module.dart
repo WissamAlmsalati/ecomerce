@@ -1,5 +1,6 @@
 class Clothing {
   String id;
+  String quantity;
   String name;
   String price;
   String size;
@@ -11,6 +12,7 @@ class Clothing {
 
   Clothing({
     required this.id,
+    required this.quantity,
     required this.name,
     required this.description,
     required this.image,
@@ -25,6 +27,7 @@ class Clothing {
   factory Clothing.fromMap(Map<String, dynamic> map) {
     return Clothing(
       id: map['id'],
+      quantity: map['quantity'],
       name: map['name'],
       description: map['description'],
       image: map['image'],
@@ -40,6 +43,7 @@ class Clothing {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'quantity': quantity,
       'name': name,
       'description': description,
       'image': image,

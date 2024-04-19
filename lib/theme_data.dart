@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 ThemeData appTheme() {
   return ThemeData(
+    useMaterial3: true,
     primarySwatch: Colors.brown,
     primaryColor: Colors.brown[800],
     scaffoldBackgroundColor: Colors.white,

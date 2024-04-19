@@ -1,15 +1,15 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:recipes/moudels/user/user_module.dart';
-import '../../firebase/firebase_firestore.dart';
-
 class UserRepository  {
 
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static FirebaseFirestore _db = FirebaseFirestore.instance;
 
-static Future<void> SignUp(String email, String password, String phone, String name) async {
+static Future<void> SignUp(String email, String password, String phone, String name ,BuildContext context) async {
   try {
     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
       email: email,
@@ -31,7 +31,8 @@ static Future<void> SignUp(String email, String password, String phone, String n
     }
   } catch (e) {
     if (e is FirebaseAuthException && e.code == 'email-already-in-use') {
-      throw Exception('The email is already in use.');
+      //show alert dialog
+      throw Exception('The account already exists for that email.');
     } else {
       print(e);
       throw Exception('An unknown error occurred.');
@@ -41,7 +42,8 @@ static Future<void> SignUp(String email, String password, String phone, String n
 
 
 
-static Future<AppUser?> SignIn(String email, String password) async {
+// ignore: non_constant_identifier_names
+static Future<AppUser?> SignIn( String email, String password) async {
   try {
     // Sign in the user
     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
@@ -69,7 +71,9 @@ static Future<AppUser?> SignIn(String email, String password) async {
     if (e is FirebaseAuthException && e.code == 'user-not-found') {
       throw Exception('No user found for this email.');
     } else {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       throw Exception('An unknown error occurred.');
     }
   }
@@ -118,7 +122,9 @@ static Future<void> updateProfile(String name, String phone) async {
       });
     }
   } catch (e) {
-    print(e);
+    if (kDebugMode) {
+      print(e);
+    }
   }
 }
 
@@ -136,5 +142,14 @@ static Future<void> updatePassword(String password) async {
   }
 }
 
+ static Future<AppUser?> fetchUser(String id) async {
+    DocumentSnapshot doc = await _db.collection('users').doc(id).get();
+    if (doc.exists) {
+      // Assuming that AppUser has a factory constructor that creates an instance from a Map
+      return AppUser.fromMap(doc.data() as Map<String, dynamic>);
+    } else {
+      return null;
+    }
+  }
 
 }

@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:recipes/constance.dart';
+import 'package:recipes/moudels/orders/order_repostry.dart';
+import '../../moudels/orders/order_model.dart';
 
-import 'componets/text_description.dart';
 
+// ignore: must_be_immutable
 class ClothesScreen extends StatefulWidget {
   String recipeId;
   String recipeName;
@@ -13,7 +15,8 @@ class ClothesScreen extends StatefulWidget {
   String recipeImage;
   String discount;
   String price;
-
+  String size;
+  String quantity;
 
   ClothesScreen(
       {super.key,
@@ -21,8 +24,13 @@ class ClothesScreen extends StatefulWidget {
       required this.recipeName,
       required this.recipeDescription,
       required this.recipeImage,
-        required this.price,
-      required this.discount});
+      required this.price,
+      required this.discount,
+        required this.size,
+        required this.quantity
+
+
+      });
 
   @override
   State<ClothesScreen> createState() => _ClothesScreenState();
@@ -32,11 +40,24 @@ class _ClothesScreenState extends State<ClothesScreen> {
   bool _isExpanded = false;
   String selectedSize = '';
 
+
+
+String checkPriceAndQuantity() {
+  double quantity = double.parse(widget.quantity);
+  double price = double.parse(widget.price);
+
+  if(quantity == 0){
+    return 'Out of Stock';
+  }else{
+    return '\$${price.toStringAsFixed(2)}';
+  }
+}
+
   @override
   Widget build(BuildContext context) {
+  Constans constans = Constans(context);
     List<String> sizes = ['S', 'M', 'L', 'XL'];
 
-    final constans = Constans(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -58,7 +79,10 @@ class _ClothesScreenState extends State<ClothesScreen> {
             SizedBox(
               height: constans.height * 0.44,
               width: constans.width,
-              child: Hero(tag: widget.recipeImage, child: Image.network(widget.recipeImage, fit: BoxFit.cover)),
+              child: Hero(
+                  tag: widget.recipeImage,
+                  child: Image.network(widget.recipeImage,
+                      fit: BoxFit.cover)),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15, right: 15, top: 25),
@@ -101,7 +125,6 @@ class _ClothesScreenState extends State<ClothesScreen> {
                           return ChoiceChip(
                             backgroundColor: constans.white,
                             selectedColor: constans.brown,
-
                             label: Text(size),
                             selected: selectedSize == size,
                             onSelected: (selected) {
@@ -127,70 +150,89 @@ class _ClothesScreenState extends State<ClothesScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 80,
-        width: constans.width,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black.withOpacity(0.2)),
-          color: Colors.white,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          child: Row(
-            children: [
-Row(
-  children: [
-    if (widget.discount != null && widget.discount != '0' && isNumeric(widget.discount))
-      Text(
-        "\$${widget.price}",
-        style: TextStyle(
-          fontSize: 20,
-          decoration: TextDecoration.lineThrough,
-        ),
-      ),
-    Text(
-      "\$${widget.discount != null && widget.discount != '0' && isNumeric(widget.discount) ? (double.parse(widget.price) * (1 - double.parse(widget.discount) / 100)).toStringAsFixed(2) : widget.price}",
-      style: TextStyle(fontSize: 20),
+     bottomNavigationBar: Container(
+  height: 100,
+  width: constans.width,
+  decoration: BoxDecoration(
+    border: Border.all(color: Colors.black.withOpacity(0.2)),
+    color: Colors.white,
+    borderRadius:  BorderRadius.only(
+      topLeft: Radius.circular(20),
+      topRight: Radius.circular(20),
     ),
-  ],
-),              const Spacer(),
-
-
-
-              SizedBox(
-                width: 180,
-                height: 60,
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(constans.brown),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
+  ),
+  child: Padding(
+    padding:  EdgeInsets.only(left: 15, right: 15),
+    child: Row(
+      children: [
+        Row(
+          children: [
+            Text(
+              widget.price,
+              style: TextStyle(fontSize: constans.height * 0.02, color: constans.brown),
+            ),
+          ],
+        ),
+        const Spacer(),
+        double.parse(widget.quantity) == 0
+          ? Text(
+              'Out of Stock',
+              style: TextStyle(fontSize: constans.height * 0.014, color: Colors.red),
+            )
+          : SizedBox(
+              width: constans.width * 0.4,
+              height: constans.height * 0.06,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(constans.brown),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    onPressed: () {}, child: const Row(
-                      children: [
-                        Icon(Icons.shopping_cart, color: Colors.white,),
-                        Spacer(),
-                        Text("Add To Cart", style: TextStyle(color: Colors.white),),
-                      ],
-                    )),
-              ),
-            ],
-          ),
-        ),
-      ),
+                  ),
+                  onPressed: () {
+                    OrderModel order = OrderModel(
+                      id: '1',
+                      userId: '123',
+                      userName: 'John Doe',
+                      orderDate: '2022-01-01',
+                      orderStatus: 'Delivered',
+                      totalPrice: widget.price,
+                      orderAddress: '123 Street, City, Country',
+                      orderItems: [widget.recipeName],
+                    );
+
+                    OrderRepository orderRepository = OrderRepository();
+                    orderRepository.addOrder(order.toMap());
+                  },
+                  child:  Row(
+                    children: [
+                      Icon(
+                        Icons.shopping_cart,
+                        color: Colors.white,
+                      ),
+                      Spacer(),
+                      Text(
+                        "Add To Cart",
+                        style: TextStyle(color: Colors.white ,fontSize:constans.height * 0.01),
+                      ),
+                    ],
+                  )),
+            ),
+      ],
+    ),
+  ),
+),
     );
   }
+
   bool isNumeric(String s) {
-  if(s == null) {
-    return false;
+    return double.tryParse(s) != null;
   }
-  return double.tryParse(s) != null;
-}
+
+
+
+
 }

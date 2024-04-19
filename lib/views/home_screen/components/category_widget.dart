@@ -1,12 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../constance.dart';
 import '../../../controlers/category_controler/cubit/category_cubit.dart';
-import '../../../moudels/category/category_module.dart';
 import '../../category_screen/category_screen.dart';
 
 class CategoryWidget extends StatelessWidget {

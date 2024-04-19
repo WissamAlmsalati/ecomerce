@@ -8,7 +8,6 @@ import 'package:otp_pin_field/otp_pin_field.dart';
 
 // ignore: must_be_immutable
 class OtpScreen extends StatefulWidget {
-  bool _isInit = true;
   var _contact = "+218910222996";
 
   @override

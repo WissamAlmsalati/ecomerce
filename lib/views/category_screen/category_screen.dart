@@ -1,12 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes/views/clothes_detail_screen/clothes_detail_screen.dart';
-
-import '../../constance.dart';
-import '../home_screen/components/recipe_widget.dart';
 import '../../../controlers/recipes_controler/cubti_recipes/fetch_recipes_cubit.dart';
 
 class CategoryScreen extends StatelessWidget {
@@ -61,7 +56,7 @@ class CategoryScreen extends StatelessWidget {
                               recipeId: recipe.id,
                               recipeName: recipe.name,
                               recipeDescription: recipe.description,
-                              recipeImage: recipe.image, discount: '', price: recipe.price,
+                              recipeImage: recipe.image, discount: '', price: recipe.price, size: '', quantity: '',
 
                             ),
                           ));

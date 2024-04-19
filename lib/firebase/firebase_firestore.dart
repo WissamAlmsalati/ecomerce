@@ -1,7 +1,6 @@
 // Import the cloud_firestore package at the top of your file
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../moudels/user/user_module.dart';
 
 // Define the FirestoreService abstract class
 abstract class FirestoreService {

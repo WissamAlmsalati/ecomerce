@@ -1,14 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../constance.dart';
 import '../../../../controlers/banner_controler/cubit/banner_controler_cubit.dart';
 import '../../../../controlers/navbar_controler/cubit/screen_controler_cubit.dart';
 import '../../../../controlers/recipes_controler/cubti_recipes/fetch_recipes_cubit.dart';
-import '../theme_data.dart';
 
 class ScreensBody extends StatelessWidget {
   const ScreensBody({Key? key}) : super(key: key);
@@ -16,11 +14,18 @@ class ScreensBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Constans constants = Constans(context);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: appTheme(),
-      home: BlocProvider(
-        create: (BuildContext context) => ScreenControlerCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<FetchRecipesCubit>(
+          create: (BuildContext context) => FetchRecipesCubit()..fetchRecipes(),
+        ),
+        BlocProvider<BannerCubit>(
+          create: (BuildContext context) => BannerCubit()..fetchBanner(),
+        ),
+        BlocProvider<ScreenControlerCubit>(
+          create: (BuildContext context) => ScreenControlerCubit(),
+        ),
+      ],
         child: BlocBuilder<ScreenControlerCubit, ScreenControlerState>(
           builder: (context, state) {
             int currentIndex = 0;
@@ -92,7 +97,7 @@ class ScreensBody extends StatelessWidget {
             );
           },
         ),
-      ),
+
     );
   }
 }
