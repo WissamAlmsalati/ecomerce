@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recipes/controlers/recipes_controler/cubti_recipes/fetch_recipes_cubit.dart';
 import '../../constance.dart';
 import 'components/banner.dart';
 import 'components/category_widget.dart';
@@ -15,31 +17,37 @@ class HomeScreen extends StatelessWidget {
     final Constans constants = Constans(context);
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const CoustomAppBar(),
-              constants.smallSizedsBoxHeight,
-              const CoustomeSearchBar(),
-              constants.samllmediumSizedBoxHeight,
-              const BannerWidget(),
-              TextRow(
-                text: 'Last Recipes',
-                tapText: 'View All',
-                onTap: () {},
-              ),
-              const CategoryWidget(),
-              constants.samllmediumSizedBoxHeight,
-              const FlashSale(),
-              // Add additional widgets as needed
-            ],
+      body: RefreshIndicator(
+        //i need to change indecator style 
+
+        onRefresh: () async {
+          // Access the Cubit and call the fetch method
+          context.read<FetchRecipesCubit>().fetchRecipes();
+        },
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const CoustomAppBar(),
+                constants.smallSizedsBoxHeight,
+                const CoustomeSearchBar(),
+                constants.samllmediumSizedBoxHeight,
+                const BannerWidget(),
+                TextRow(
+                  text: 'Last Recipes',
+                  tapText: 'View All',
+                  onTap: () {},
+                ),
+                const CategoryWidget(),
+                constants.samllmediumSizedBoxHeight,
+                const FlashSale(),
+                // Add additional widgets as needed
+              ],
+            ),
           ),
         ),
       ),
-    );
+    ); 
   }
 }
-
-

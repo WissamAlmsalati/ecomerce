@@ -3,12 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../../../constance.dart';
 import '../../../controlers/category_controler/cubit/category_cubit.dart';
 import '../../category_screen/category_screen.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart'
-    as GetTransitions;
+
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({super.key});

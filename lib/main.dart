@@ -3,12 +3,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recipes/controlers/cart_control_cubit/cubit/cart_cubit.dart';
 import 'package:recipes/controlers/navbar_controler/cubit/screen_controler_cubit.dart';
 import 'package:recipes/controlers/recipes_controler/cubti_recipes/fetch_recipes_cubit.dart';
+import 'package:recipes/moudels/cart/cart_repostry.dart';
 import 'package:recipes/preferences.dart';
 import 'package:recipes/theme_data.dart';
 import 'package:recipes/views/on_boarding/on_boarding.dart';
-import 'views/screens_body.dart';
+import 'views/app_body.dart';
 import 'firebase/firebase_options.dart';
 import 'controlers/banner_controler/cubit/banner_controler_cubit.dart';
 
@@ -35,12 +37,18 @@ Future<void> main() async {
         BlocProvider<ScreenControlerCubit>(
           create: (BuildContext context) => ScreenControlerCubit(),
         ),
+        BlocProvider<CartCubit>(
+          create: (BuildContext context) => CartCubit(CartRepository()),
+        )
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: appTheme(),
-        home: isLoggedIn ? const ScreensBody() : const OnBoarding(),
+        home: isLoggedIn ? const AppBody() : const OnBoarding(),
       ),
     ),
   );
 }
+
+
+//        home: isLoggedIn ? const ScreensBody() : const OnBoarding(),

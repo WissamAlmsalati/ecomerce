@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:recipes/constance.dart';
+import 'package:recipes/controlers/cart_control_cubit/cubit/cart_cubit.dart';
+import 'package:recipes/moudels/cart/cart_model.dart';
 import 'package:recipes/moudels/orders/order_repostry.dart';
 import '../../moudels/orders/order_model.dart';
 
@@ -191,20 +194,17 @@ String checkPriceAndQuantity() {
                     ),
                   ),
                   onPressed: () {
-                    OrderModel order = OrderModel(
-                      id: '1',
-                      userId: '123',
-                      userName: 'John Doe',
-                      orderDate: '2022-01-01',
-                      orderStatus: 'Delivered',
-                      totalPrice: widget.price,
-                      orderAddress: '123 Street, City, Country',
-                      orderItems: [widget.recipeName],
-                    );
-
-                    OrderRepository orderRepository = OrderRepository();
-                    orderRepository.addOrder(order.toMap());
-                  },
+            context.read<CartCubit>().addToCart(
+              CartModel(
+                id: widget.recipeId,
+                name: widget.recipeName,
+                price: widget.price,
+                size: selectedSize,
+                quantityCart: '1',
+                image: widget.recipeImage,
+              ),
+            );
+          },
                   child:  Row(
                     children: [
                       const Icon(

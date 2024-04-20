@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:get/get.dart';
-import 'package:recipes/views/screens_body.dart';
+import 'package:recipes/views/app_body.dart';
 import '../../../constance.dart';
 import '../../../moudels/user/terms_conditions.dart';
 import '../../../moudels/user/user_repository.dart';
@@ -134,7 +134,7 @@ class SignUpForm extends StatelessWidget {
                     );
                     UserPreferences().saveUserLoggedIn(true);
                     Get.to(
-                      () => const ScreensBody(),
+                      () => const AppBody(),
                     );
                   } catch (e) {
                     showDialog(
