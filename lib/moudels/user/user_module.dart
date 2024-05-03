@@ -1,29 +1,24 @@
-class AppUser {
-  String id;
-  String name;
+class UserModel {
+  int? id;
   String email;
+  String username;
   String password;
   String phone;
 
-  AppUser({ required this.name,  required this.email,  required this.password , required this.phone, required this.id});
+  UserModel({
+    this.id,
+    required this.email,
+    required this.username,
+    required this.password,
+    required this.phone,
+  });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'password': password,
-      'phone': phone,
-    };
-  }
-
-  factory AppUser.fromMap(Map<String, dynamic> map) {
-    return AppUser(
-      id: map['id'],
-      name: map['name'],
-      email: map['email'],
-      password: map['password'],
-      phone: map['phone'],
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      email: json['email'] as String,
+      username: json['username'] as String,
+      password: json['password'] as String,
+      phone: json['phone'] as String,
     );
   }
 }

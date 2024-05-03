@@ -1,163 +1,132 @@
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:recipes/moudels/user/user_module.dart';
-class UserRepository  {
 
-  static final FirebaseAuth _auth = FirebaseAuth.instance;
-  static final FirebaseFirestore _db = FirebaseFirestore.instance;
+class UserController {
+  static const String baseUrl =
+      'http://10.0.2.2:8080'; // Replace with your backend API base URL
 
-// ignore: non_constant_identifier_names
-static Future<void> SignUp(String email, String password, String phone, String name ,BuildContext context) async {
-  try {
-    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+  Future<void> storeUserData(UserModel user) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('id', user.id ?? 0);
+    await prefs.setString('email', user.email);
+    await prefs.setString('username', user.username);
+    await prefs.setString('phone', user.phone);
+  }
 
-    User? firebaseUser = userCredential.user;
+  Future<String?> getCurrentUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('username');
+  }
 
-    if (firebaseUser != null) {
-      AppUser appUser = AppUser(
-        id: firebaseUser.uid,
-        email: email,
-        name: name,
-        password: password,
-        phone: phone,
+  Future<UserModel?> signup(
+      String email, String username, String password, String phone) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/users/signup'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'email': email,
+          'username': username,
+          'password': password,
+          'phone': phone,
+        }),
       );
 
-      await _db.collection('users').doc(firebaseUser.uid).set(appUser.toMap());
-    }
-  } catch (e) {
-    if (e is FirebaseAuthException && e.code == 'email-already-in-use') {
-      //show alert dialog
-      throw Exception('The account already exists for that email.');
-    } else {
-      if (kDebugMode) {
-        print(e);
+      if (response.statusCode == 201) {
+        // Successful signup
+        print('Signed up successfully');
+        UserModel user = UserModel.fromJson(jsonDecode(response.body));
+        await storeUserData(user);
+        return user;
+      } else {
+        // Failed signup, handle error
+        print('Failed to sign up: ${response.body}');
+        throw Exception('Failed to sign up');
       }
-      throw Exception('An unknown error occurred.');
+    } catch (e) {
+      // Exception occurred, handle error
+      print('Exception occurred during signup: $e');
+      throw Exception('Failed to sign up');
     }
   }
-}
 
+  Future<UserModel?> login(String email, String password) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/users/login'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'email': email,
+          'password': password,
+        }),
+      );
 
-
-// ignore: non_constant_identifier_names
-static Future<AppUser?> SignIn( String email, String password) async {
-  try {
-    // Sign in the user
-    UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-
-    // Get the User object
-    User? firebaseUser = userCredential.user;
-
-    if (firebaseUser != null) {
-      // Fetch the user data from Firestore
-      DocumentSnapshot doc = await _db.collection('users')
-          .doc(firebaseUser.uid)
-          .get();
-
-      // Create a new AppUser object
-      AppUser appUser = AppUser.fromMap(doc.data() as Map<String, dynamic>);
-
-      return appUser;
-    } else {
-      throw Exception('Sign in failed.');
-    }
-  } catch (e) {
-    if (e is FirebaseAuthException && e.code == 'user-not-found') {
-      throw Exception('No user found for this email.');
-    } else {
-      if (kDebugMode) {
-        print(e);
+      if (response.statusCode == 200) {
+        print('Logged in successfully');
+        UserModel user = UserModel.fromJson(jsonDecode(response.body));
+        await storeUserData(user);
+        return user;
+      } else {
+        print('Failed to log in: ${response.body}');
+        throw Exception('Failed to log in');
       }
-      throw Exception('An unknown error occurred.');
+    } catch (e) {
+      // Exception occurred, handle error
+      print('Exception occurred during login: $e');
+      throw Exception('Failed to log in');
     }
   }
-}
 
-// ignore: non_constant_identifier_names
-static Future<void> SignOut() async {
-  await _auth.signOut();
-}
+  Future<void> logout() async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/users/logout'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
 
-static Future<AppUser?> getCurrentUser() async {
-  try {
-    // Get the current user
-    User? firebaseUser = _auth.currentUser;
-
-    if (firebaseUser != null) {
-      // Fetch the user data from Firestore
-      DocumentSnapshot doc = await _db.collection('users')
-          .doc(firebaseUser.uid)
-          .get();
-
-      // Create a new AppUser object
-      AppUser appUser = AppUser.fromMap(doc.data() as Map<String, dynamic>);
-
-      return appUser;
-    } else {
-      return null;
-    }
-  } catch (e) {
-    if (kDebugMode) {
-      print(e);
-    }
-    return null;
-  }
-}
-
-static Future<void> updateProfile(String name, String phone) async {
-  try {
-    // Get the current user
-    User? firebaseUser = _auth.currentUser;
-
-    if (firebaseUser != null) {
-      // Update the user data in Firestore
-      await _db.collection('users')
-          .doc(firebaseUser.uid)
-          .update({
-        'name': name,
-        'phone': phone,
-      });
-    }
-  } catch (e) {
-    if (kDebugMode) {
-      print(e);
+      if (response.statusCode == 201) {
+        // Successful logout
+        print('Logged out successfully');
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.clear(); // Clear all data
+      } else {
+        // Failed logout, handle error
+        print('Failed to log out: ${response.body}');
+        throw Exception('Failed to log out');
+      }
+    } catch (e) {
+      // Exception occurred, handle error
+      print('Exception occurred during logout: $e');
+      throw Exception('Failed to log out');
     }
   }
-}
 
-static Future<void> updatePassword(String password) async {
-  try {
-    // Get the current user
-    User? firebaseUser = _auth.currentUser;
+  Future<UserModel?> getCurrentUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? id = prefs.getInt('id');
+    String? email = prefs.getString('email');
+    String? username = prefs.getString('username');
+    String? phone = prefs.getString('phone');
 
-    if (firebaseUser != null) {
-      // Update the user password
-      await firebaseUser.updatePassword(password);
-    }
-  } catch (e) {
-    if (kDebugMode) {
-      print(e);
-    }
-  }
-}
-
- static Future<AppUser?> fetchUser(String id) async {
-    DocumentSnapshot doc = await _db.collection('users').doc(id).get();
-    if (doc.exists) {
-      // Assuming that AppUser has a factory constructor that creates an instance from a Map
-      return AppUser.fromMap(doc.data() as Map<String, dynamic>);
+    if (id != null && email != null && username != null && phone != null) {
+      return UserModel(
+        id: id,
+        email: email,
+        username: username,
+        phone: phone,
+        password: '',
+      );
     } else {
       return null;
     }
   }
-
 }

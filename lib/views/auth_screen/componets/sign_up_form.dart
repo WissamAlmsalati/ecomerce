@@ -15,6 +15,9 @@ class SignUpForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    UserController userController = UserController();
+
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
     final TextEditingController phoneController = TextEditingController();
@@ -122,34 +125,32 @@ class SignUpForm extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () async {
-                if (formKey.currentState!.validate()) {
-                  try {
-                    await UserRepository.SignUp(
-                      emailController.text,
-                      passwordController.text,
-                      phoneController.text,
-                      nameController.text,
-                      context,
-                    );
-                    UserPreferences().saveUserLoggedIn(true);
-                    Get.to(
-                      () => const AppBody(),
-                    );
-                  } catch (e) {
-                    showDialog(
-                      // ignore: use_build_context_synchronously
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const AlertDialog(
-                          title: Text('Sign Up Failed'),
-                          content: Text("email or password is incorrect"),
-                        );
-                      },
-                    );
-                  }
-                }
-              },
+       onPressed: () async {
+  if (formKey.currentState!.validate()) {
+    try {
+      await userController.signup(
+
+        emailController.text,
+        nameController.text,
+        phoneController.text,
+        passwordController.text,
+      );
+      UserPreferences().saveUserLoggedIn(true);
+      Get.to(() => const AppBody(),
+      );
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Sign Up Failed'),
+            content: Text(e.toString()),
+          );
+        },
+      );
+    }
+  }
+},
               child: Text(
                 "Sign Up",
                 style: TextStyle(

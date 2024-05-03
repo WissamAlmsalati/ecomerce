@@ -8,7 +8,7 @@ final class UserContolerInitial extends UserContolerState {}
 final class UserContolerLoading extends UserContolerState {}
 
 final class UserContolerSuccess extends UserContolerState {
-  final AppUser userModule;
+  final UserModel userModule;
 
   UserContolerSuccess(this.userModule);
 }

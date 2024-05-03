@@ -2,10 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
+import 'package:recipes/moudels/user/user_module.dart';
+import 'package:recipes/moudels/user/user_repository.dart';
 import 'package:recipes/views/auth_screen/auth_sign_up.dart';
 import 'package:recipes/views/app_body.dart';
 import '../../../constance.dart';
-import '../../../moudels/user/user_repository.dart';
+
 import 'coustome_text_filed.dart';
 
 class SignInForm extends StatelessWidget {
@@ -13,6 +15,9 @@ class SignInForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    UserController userController = UserController();
+
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
@@ -67,31 +72,30 @@ class SignInForm extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () async {
-                if (formKey.currentState!.validate()) {
-                  try {
-                    await UserRepository.SignIn(
-                      emailController.text,
-                      passwordController.text,
-
-                    );
-                    if (kDebugMode) {
-                      print("Validated");
-                    }
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AppBody()));
-                  } catch (e) {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const AlertDialog(
-                          title: Text('Sign Up Failed'),
-                          content: Text("email or password is incorrect"),
-                        );
-                      },
-                    );
-                  }
-                }
-              },
+        onPressed: () async {
+  if (formKey.currentState!.validate()) {
+    UserModel? loginSuccess = await userController.login(
+      emailController.text,
+      passwordController.text,
+    );
+    if (loginSuccess != null) {
+      if (kDebugMode) {
+        print("Validated");
+      }
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const AppBody()));
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const AlertDialog(
+            title: Text('Login Failed'),
+            content: Text("Email or password is incorrect"),
+          );
+        },
+      );
+    }
+  }
+},
               child: Text(
                 "Log in ",
                 style: TextStyle(color: constans.white,fontSize: constans.width * 0.03),

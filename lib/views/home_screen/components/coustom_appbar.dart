@@ -9,10 +9,11 @@ class CoustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserController userController = UserController();
     final constans = Constans(context);
-    return FutureBuilder<AppUser?>(
-      future: UserRepository.getCurrentUser(),
-      builder: (BuildContext context, AsyncSnapshot<AppUser?> snapshot) {
+    return FutureBuilder<String?>(
+      future: userController.getCurrentUsername(),
+      builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container();
         } else if (snapshot.hasError) {
@@ -29,7 +30,7 @@ class CoustomAppBar extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(snapshot.data!.name,
+                    Text(snapshot.data!,
                         style: TextStyle(fontSize: constans.height * 0.02)),
                     Row(
                       children: [

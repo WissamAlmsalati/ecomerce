@@ -8,6 +8,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     UserController userRepository = UserController();
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -15,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
       body: Column(
         children: [
           ElevatedButton(onPressed: (){
-            UserRepository.SignOut();
+            userRepository.logout();
             Navigator.push(context, MaterialPageRoute(builder: (context) => const SignIn()));
     }, child: const Text('Sign Out')
           )

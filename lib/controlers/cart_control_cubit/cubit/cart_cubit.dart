@@ -41,7 +41,7 @@ class CartCubit extends Cubit<CartState> {
 
   Future<void> sendCartToFirebase() async {
     // Fetch the current user
-    AppUser? appUser = await UserRepository.getCurrentUser();
+    UserModel? appUser = await UserController().getCurrentUser();
     print('appUser: $appUser');
     if (appUser != null) {
       // Get the cart from the state
@@ -55,7 +55,7 @@ class CartCubit extends Cubit<CartState> {
         'totalPrice': _cartRepository.totalPrice,
         'userId': appUser.id,
         'userEmail': appUser.email,
-        'userName': appUser.name,
+        'userName': appUser.username,
         'phoneNumber': appUser.phone,
       };
 
