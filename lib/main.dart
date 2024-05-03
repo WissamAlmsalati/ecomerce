@@ -44,11 +44,11 @@ Future<void> main() async {
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: appTheme(),
-        home: isLoggedIn ? const AppBody() : const OnBoarding(),
+        home: OnBoarding()
       ),
     ),
   );
 }
 
 
-//        home: isLoggedIn ? const ScreensBody() : const OnBoarding(),
+//        home: isLoggedIn ? const AppBody() : const OnBoarding(),
