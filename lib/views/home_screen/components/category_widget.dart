@@ -15,7 +15,7 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final constans = Constans(context);
 
-    return BlocProvider(
+    return  BlocProvider(
       create: (BuildContext context) {
         return CategoryCubit()..fetchCategory();
       },
@@ -30,6 +30,7 @@ class CategoryWidget extends StatelessWidget {
               child: Text(state.message),
             );
           } else if (state is CategoryLoaded) {
+            print('Categories: ${state.categories}'); // Print the categories
             return SizedBox(
               height: constans.height * 0.08,
               width: constans.width * 0.96,
@@ -38,7 +39,9 @@ class CategoryWidget extends StatelessWidget {
                 itemCount: state.categories.length,
                 itemBuilder: (BuildContext context, int index) {
                   if (kDebugMode) {
-                    print('Image URL: ${state.categories[index].image}');
+
+                    print('Category Name: ${state.categories[index].name}');
+                    print('Image URL: ${state.categories[index].name}');
                   } // Print the image URL
                   return GestureDetector(
                     onTap: () {
@@ -52,8 +55,8 @@ class CategoryWidget extends StatelessWidget {
                     child: Container(
                       margin: index != state.categories.length
                           ? EdgeInsets.only(
-                              left: constans.mediumWidth,
-                              right: constans.mediumWidth)
+                          left: constans.mediumWidth,
+                          right: constans.mediumWidth)
                           : EdgeInsets.zero,
                       width: constans.width * 0.16,
                       decoration: BoxDecoration(
@@ -69,12 +72,11 @@ class CategoryWidget extends StatelessWidget {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(9),
                               ),
-                              child: Image.memory(
-                                base64Decode(state.categories[index].image
-                                    .split(',')
-                                    .last),
-                                scale: 0.5,
-                              )),
+                              child:Image.network(
+                                state.categories[index].picturePath,
+                                fit: BoxFit.cover,
+                              ),
+                          ),
                         ],
                       ),
                     ),

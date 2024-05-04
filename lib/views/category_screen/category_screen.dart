@@ -6,7 +6,7 @@ import '../../../controlers/recipes_controler/cubti_recipes/fetch_recipes_cubit.
 
 class CategoryScreen extends StatelessWidget {
   final String categoryName;
-  final String categoryId;
+  final int categoryId;
 
   const CategoryScreen(
       {super.key, required this.categoryName, required this.categoryId});

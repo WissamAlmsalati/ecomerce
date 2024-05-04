@@ -18,7 +18,7 @@ class FetchRecipesCubit extends Cubit<FetchRecipesState> {
     }
   }
 
-  Future<void> fetchRecipesByCategory(String categoryId) async {
+  Future<void> fetchRecipesByCategory(int categoryId) async {
     emit(DataLoading());
     try {
       final recipes = await ClothingRepository().fetchDataByCategory(categoryId);

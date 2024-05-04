@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:recipes/moudels/cart/cart_model.dart';
 import 'package:recipes/moudels/cart/cart_repostry.dart';
@@ -17,7 +16,6 @@ class CartCubit extends Cubit<CartState> {
 
   List<CartModel> get cart => _cartRepository.cart;
 
-  FirebaseFirestore get firestore => _cartRepository.firestore;
 
   void addToCart(CartModel item) {
     _cartRepository.addToCart(item);
@@ -51,7 +49,7 @@ class CartCubit extends Cubit<CartState> {
 
       Map<String, dynamic> orderData = {
         'cart': cartData,
-        'createdAt': FieldValue.serverTimestamp(),
+        'timestamp': "FieldValue.serverTimestamp()",
         'totalPrice': _cartRepository.totalPrice,
         'userId': appUser.id,
         'userEmail': appUser.email,
@@ -60,7 +58,7 @@ class CartCubit extends Cubit<CartState> {
       };
 
       try {
-        await firestore.collection('orders').add(orderData);
+
         print('Order added to Firestore');
         clearCart(); // Clear the cart after the order has been added to Firestore
       } catch (e) {

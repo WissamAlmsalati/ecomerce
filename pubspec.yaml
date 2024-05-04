@@ -10,13 +10,10 @@ dependencies:
   banner_carousel: ^1.2.1
   bloc: ^8.1.4
   cached_network_image: ^3.3.1
-  cloud_firestore: ^4.15.10
   dots_indicator: ^3.0.0
   esc_pos_printer: ^4.1.0
   esc_pos_utils: ^1.1.0
-  firebase_auth: ^4.18.0
-  firebase_core: ^2.27.2
-  firebase_storage: ^11.6.11
+
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.5

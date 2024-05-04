@@ -24,7 +24,7 @@ class Clothing {
   });
 
   // Define a fromMap constructor to create a Recipe object from a map
-  factory Clothing.fromMap(Map<String, dynamic> map) {
+  factory Clothing.fromJson(Map<String, dynamic> map) {
     return Clothing(
       id: map['id'],
       quantity: map['quantity'],

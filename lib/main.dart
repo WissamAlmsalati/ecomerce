@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +10,6 @@ import 'package:recipes/preferences.dart';
 import 'package:recipes/theme_data.dart';
 import 'package:recipes/views/on_boarding/on_boarding.dart';
 import 'package:http/http.dart' as http;
-import 'firebase/firebase_options.dart';
 import 'controlers/banner_controler/cubit/banner_controler_cubit.dart';
 
 Future<void> main() async {
@@ -20,10 +18,7 @@ Future<void> main() async {
     systemNavigationBarIconBrightness: Brightness.dark, // Navigation bar icons
   ));
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  bool isLoggedIn = await UserPreferences().getUserLoggedIn();
+
 
 
   void testConnection() async {

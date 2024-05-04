@@ -21,40 +21,30 @@ class UserController {
     return prefs.getString('username');
   }
 
-  Future<UserModel?> signup(
-      String email, String username, String password, String phone) async {
-    try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/users/signup'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, dynamic>{
-          'email': email,
-          'username': username,
-          'password': password,
-          'phone': phone,
-        }),
-      );
+  Future<void> signup(String username, String email, String password, String phone) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/users/signup'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'username': username,
+        'email': email,
+        'password': password,
+        'phone': phone,
+      }),
+    );
 
-      if (response.statusCode == 201) {
-        // Successful signup
-        print('Signed up successfully');
-        UserModel user = UserModel.fromJson(jsonDecode(response.body));
-        await storeUserData(user);
-        return user;
-      } else {
-        // Failed signup, handle error
-        print('Failed to sign up: ${response.body}');
-        throw Exception('Failed to sign up');
-      }
-    } catch (e) {
-      // Exception occurred, handle error
-      print('Exception occurred during signup: $e');
-      throw Exception('Failed to sign up');
+    if (response.statusCode == 201) {
+      // If the server returns a 200 OK response,
+      // then parse the JSON.
+      print('User signed up successfully');
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to sign up user');
     }
   }
-
   Future<UserModel?> login(String email, String password) async {
     try {
       final response = await http.post(

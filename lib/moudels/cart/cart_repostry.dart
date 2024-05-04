@@ -1,12 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:recipes/moudels/cart/cart_model.dart';
 
 class CartRepository {
   final List<CartModel> _cart = [];
-  final _firestore = FirebaseFirestore.instance;
 
   List<CartModel> get cart => _cart;
-  FirebaseFirestore get firestore => _firestore;
 
   void addToCart(CartModel item) {
     _cart.add(item);
@@ -24,7 +21,6 @@ class CartRepository {
 
   Future<void> sendCartToFirebase() async {
     for (var item in _cart) {
-      await _firestore.collection('orders').add(item.toMap());
     }
   }
 
