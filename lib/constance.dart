@@ -6,6 +6,7 @@ class Constans {
 
   Constans(this.context);
 
+
   double get height => MediaQuery.of(context).size.height;
 
   double get width => MediaQuery.of(context).size.width;
@@ -59,6 +60,9 @@ class Constans {
   SizedBox get mediumSizedBoxWidth {
     return SizedBox(width: MediaQuery.of(context).size.width * 0.05);
   }
+
+
+
 
   SizedBox get largeSizedBoxWidth {
     return SizedBox(width: MediaQuery.of(context).size.width * 0.1);

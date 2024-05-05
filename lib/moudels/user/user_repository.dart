@@ -1,12 +1,12 @@
 import 'package:http/http.dart' as http;
+import 'package:recipes/service.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:recipes/moudels/user/user_module.dart';
 
 class UserController {
-  static const String baseUrl =
-      'http://10.0.2.2:8080'; // Replace with your backend API base URL
+  static const String baseUrl = ApiService.baseUrl; // Replace with your backend API base URL
 
   Future<void> storeUserData(UserModel user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
