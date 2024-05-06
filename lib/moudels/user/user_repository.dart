@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:recipes/moudels/user/user_module.dart';
 
 class UserController {
-  static const String baseUrl = ApiService.baseUrl; // Replace with your backend API base URL
+  static const String baseUrl = ApiService.baseUrlLocal; // Replace with your backend API base URL
 
   Future<void> storeUserData(UserModel user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -23,7 +23,7 @@ class UserController {
 
   Future<void> signup(String username, String email, String password, String phone) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/users/signup'),
+      Uri.parse('$baseUrl/api/auth/signup'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -48,7 +48,7 @@ class UserController {
   Future<UserModel?> login(String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/users/login'),
+        Uri.parse('$baseUrl/api/auth/login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
