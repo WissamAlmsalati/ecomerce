@@ -1,12 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:recipes/service.dart';
+import 'package:recipes/views/app_body.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:recipes/moudels/user/user_module.dart';
 
 class UserController {
-  static const String baseUrl = ApiService.baseUrlLocal; // Replace with your backend API base URL
+  static const String baseUrl = 'http://10.0.2.2:3000';
 
   Future<void> storeUserData(UserModel user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -21,7 +24,8 @@ class UserController {
     return prefs.getString('username');
   }
 
-  Future<void> signup(String username, String email, String password, String phone) async {
+  Future<void> signup(
+      String username, String email, String password, String phone) async {
     final response = await http.post(
       Uri.parse('$baseUrl/api/auth/signup'),
       headers: <String, String>{
@@ -45,31 +49,39 @@ class UserController {
       throw Exception('Failed to sign up user');
     }
   }
-  Future<UserModel?> login(String email, String password) async {
-    try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/api/auth/login'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'email': email,
-          'password': password,
-        }),
-      );
 
-      if (response.statusCode == 200) {
-        print('Logged in successfully');
-        UserModel user = UserModel.fromJson(jsonDecode(response.body));
-        await storeUserData(user);
-        return user;
-      } else {
-        print('Failed to log in: ${response.body}');
-        throw Exception('Failed to log in');
-      }
+  Future<UserModel?> login( String email, String password ,BuildContext context) async {
+  final response = await http.post(
+    Uri.parse('http://10.0.2.2:3000/api/auth/login'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'email': email,
+      'password': password,
+    }),
+  );
+
+    try {
+      print('Response: ${response.body}');
     } catch (e) {
-      // Exception occurred, handle error
-      print('Exception occurred during login: $e');
+      print('Failed to print response: $e');
+    }
+
+    if (response.statusCode == 200) {
+      print('Logged in successfully');
+      UserModel user = UserModel.fromJson(jsonDecode(response.body));
+      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AppBody()));
+      await storeUserData(user);
+      return user;
+    } else if (response.statusCode == 500) {
+      print('Server error: ${response.body}');
+      throw Exception('Server error');
+    } else {
+      print('Failed to log in: ${response.body}');
       throw Exception('Failed to log in');
     }
   }
@@ -103,9 +115,9 @@ class UserController {
   Future<UserModel?> getCurrentUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? id = prefs.getInt('id');
-    String? email = prefs.getString('email');
-    String? username = prefs.getString('username');
-    String? phone = prefs.getString('phone');
+    String email = prefs.getString('email') ?? '';
+    String username = prefs.getString('username') ?? '';
+    String phone = prefs.getString('phone') ?? '';
 
     if (id != null && email != null && username != null && phone != null) {
       return UserModel(

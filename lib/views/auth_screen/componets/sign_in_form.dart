@@ -15,7 +15,6 @@ class SignInForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     UserController userController = UserController();
 
     final TextEditingController emailController = TextEditingController();
@@ -27,13 +26,13 @@ class SignInForm extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: Column(children: [
-          Text("Sign in", style:  TextStyle(fontSize: constans.width * 0.06)),
+          Text("Sign in", style: TextStyle(fontSize: constans.width * 0.06)),
           const SizedBox(height: 10),
-          Text(
-              "Fill your information below or \nlogin with social media",
+          Text("Fill your information below or \nlogin with social media",
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: constans.width*0.025, color: constans.black.withOpacity(0.7))),
+                  fontSize: constans.width * 0.025,
+                  color: constans.black.withOpacity(0.7))),
           const SizedBox(
             height: 40,
           ),
@@ -54,7 +53,6 @@ class SignInForm extends StatelessWidget {
             keyboardType: TextInputType.visiblePassword,
             valdatorText: 'Enter Your Password',
           ),
-
           const SizedBox(
             height: 20,
           ),
@@ -64,7 +62,7 @@ class SignInForm extends StatelessWidget {
             child: ElevatedButton(
               style: ButtonStyle(
                 backgroundColor:
-                MaterialStateProperty.all<Color>(constans.brown),
+                    MaterialStateProperty.all<Color>(constans.brown),
                 // change this color to your desired color
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -72,33 +70,19 @@ class SignInForm extends StatelessWidget {
                   ),
                 ),
               ),
-        onPressed: () async {
-  if (formKey.currentState!.validate()) {
-    UserModel? loginSuccess = await userController.login(
-      emailController.text,
-      passwordController.text,
-    );
-    if (loginSuccess != null) {
-      if (kDebugMode) {
-        print("Validated");
-      }
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const AppBody()));
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return const AlertDialog(
-            title: Text('Login Failed'),
-            content: Text("Email or password is incorrect"),
-          );
-        },
-      );
-    }
-  }
-},
+              onPressed: () async {
+                if (formKey.currentState!.validate()) {
+                  UserModel? loginSuccess = await userController.login(
+                    emailController.text,
+                    passwordController.text,
+                    context,
+                  );
+                }
+              },
               child: Text(
                 "Log in ",
-                style: TextStyle(color: constans.white,fontSize: constans.width * 0.03),
+                style: TextStyle(
+                    color: constans.white, fontSize: constans.width * 0.03),
               ),
             ),
           ),
@@ -116,11 +100,12 @@ class SignInForm extends StatelessWidget {
                     height: 50,
                   ),
                 ),
-                 Padding(
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
                     'or log in with',
-                    style: TextStyle(color: Colors.black,fontSize: constans.width * 0.03),
+                    style: TextStyle(
+                        color: Colors.black, fontSize: constans.width * 0.03),
                   ),
                 ),
                 Expanded(
@@ -158,21 +143,20 @@ class SignInForm extends StatelessWidget {
                 ),
               ],
             ),
-
           ),
-
           const SizedBox(
             height: 30,
           ),
-
-
           Text.rich(TextSpan(
-            style: TextStyle(fontSize: constans.width*0.03),
+            style: TextStyle(fontSize: constans.width * 0.03),
             text: 'Dont have an account? ',
             children: [
               TextSpan(
                 text: 'Sign Up',
-                style: TextStyle(fontSize: constans.width*0.03,color: constans.brown ,decoration: TextDecoration.underline),
+                style: TextStyle(
+                    fontSize: constans.width * 0.03,
+                    color: constans.brown,
+                    decoration: TextDecoration.underline),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     Navigator.push(

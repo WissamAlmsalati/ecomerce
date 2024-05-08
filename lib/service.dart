@@ -4,5 +4,4 @@ class ApiService {
 
   bool useLocal = true; // Set this to false to use the remote URL
 
-  String get baseUrl => useLocal ? baseUrlLocal : baseUrlRemote;
-}
+  }
